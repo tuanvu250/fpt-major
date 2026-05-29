@@ -15,6 +15,10 @@
         --neon-green: #00ff87;
         --neon-cyan: #00ffd2;
         --neon-red: #ef4444;
+        --neon-security: #00ff66;
+        --neon-infosys: #ffaa00;
+        --neon-software: #8b5cf6;
+        --neon-semiconductor: #00ffd2;
         --text-main: #ffffff;
         --text-sub: #c8d4e8;
         --text-dim: rgba(255,255,255,0.4);
@@ -43,6 +47,7 @@
         width: 100%;
         height: 100%;
         display: block;
+        pointer-events: none;
       }
       #intro-viewer::part(logo) { display: none !important; }
       
@@ -419,6 +424,82 @@
       .card-car:hover .card-arrow-link svg { transform: translateX(4px); }
       .card-car:hover .portal-node { background: var(--neon-red); box-shadow: 0 0 14px var(--neon-red); }
 
+      /* SECURITY */
+      .card-security .portal-card { border-color: rgba(0, 255, 102, 0.12); }
+      .card-security .card-hud-corner { border-color: var(--neon-security); }
+      .card-security .card-icon-box { color: var(--neon-security); background: rgba(0, 255, 102, 0.04); border-color: rgba(0, 255, 102, 0.15); box-shadow: 0 0 10px rgba(0, 255, 102, 0.05); }
+      .card-security .card-badge { color: var(--neon-security); background: rgba(0, 255, 102, 0.1); border-color: rgba(0, 255, 102, 0.2); }
+      .card-security .card-arrow-link { color: var(--neon-security); }
+      .card-security .portal-node { border-color: var(--neon-security); box-shadow: 0 0 8px rgba(0, 255, 102, 0.4); }
+
+      .card-security:hover .portal-card {
+        border-color: rgba(0, 255, 102, 0.3);
+        box-shadow: 0 0 30px rgba(0, 255, 102, 0.08);
+        transform: translateY(-4px) scale(1.02);
+        background: rgba(10, 22, 14, 0.72);
+      }
+      .card-security:hover .card-hud-corner { opacity: 0.9; width: 14px; height: 14px; }
+      .card-security:hover .card-icon-box { background: var(--neon-security); color: #03040a; box-shadow: 0 0 14px var(--neon-security); }
+      .card-security:hover .card-arrow-link svg { transform: translateX(4px); }
+      .card-security:hover .portal-node { background: var(--neon-security); box-shadow: 0 0 14px var(--neon-security); }
+
+      /* INFOSYS */
+      .card-infosys .portal-card { border-color: rgba(255, 170, 0, 0.12); }
+      .card-infosys .card-hud-corner { border-color: var(--neon-infosys); }
+      .card-infosys .card-icon-box { color: var(--neon-infosys); background: rgba(255, 170, 0, 0.04); border-color: rgba(255, 170, 0, 0.15); box-shadow: 0 0 10px rgba(255, 170, 0, 0.05); }
+      .card-infosys .card-badge { color: var(--neon-infosys); background: rgba(255, 170, 0, 0.1); border-color: rgba(255, 170, 0, 0.2); }
+      .card-infosys .card-arrow-link { color: var(--neon-infosys); }
+      .card-infosys .portal-node { border-color: var(--neon-infosys); box-shadow: 0 0 8px rgba(255, 170, 0, 0.4); }
+
+      .card-infosys:hover .portal-card {
+        border-color: rgba(255, 170, 0, 0.3);
+        box-shadow: 0 0 30px rgba(255, 170, 0, 0.08);
+        transform: translateY(-4px) scale(1.02);
+        background: rgba(22, 16, 10, 0.72);
+      }
+      .card-infosys:hover .card-hud-corner { opacity: 0.9; width: 14px; height: 14px; }
+      .card-infosys:hover .card-icon-box { background: var(--neon-infosys); color: #03040a; box-shadow: 0 0 14px var(--neon-infosys); }
+      .card-infosys:hover .card-arrow-link svg { transform: translateX(4px); }
+      .card-infosys:hover .portal-node { background: var(--neon-infosys); box-shadow: 0 0 14px var(--neon-infosys); }
+
+      /* SOFTWARE */
+      .card-software .portal-card { border-color: rgba(139, 92, 246, 0.12); }
+      .card-software .card-hud-corner { border-color: var(--neon-software); }
+      .card-software .card-icon-box { color: var(--neon-software); background: rgba(139, 92, 246, 0.04); border-color: rgba(139, 92, 246, 0.15); box-shadow: 0 0 10px rgba(139, 92, 246, 0.05); }
+      .card-software .card-badge { color: var(--neon-software); background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.2); }
+      .card-software .card-arrow-link { color: var(--neon-software); }
+      .card-software .portal-node { border-color: var(--neon-software); box-shadow: 0 0 8px rgba(139, 92, 246, 0.4); }
+
+      .card-software:hover .portal-card {
+        border-color: rgba(139, 92, 246, 0.3);
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.08);
+        transform: translateY(-4px) scale(1.02);
+        background: rgba(16, 10, 22, 0.72);
+      }
+      .card-software:hover .card-hud-corner { opacity: 0.9; width: 14px; height: 14px; }
+      .card-software:hover .card-icon-box { background: var(--neon-software); color: #03040a; box-shadow: 0 0 14px var(--neon-software); }
+      .card-software:hover .card-arrow-link svg { transform: translateX(4px); }
+      .card-software:hover .portal-node { background: var(--neon-software); box-shadow: 0 0 14px var(--neon-software); }
+
+      /* SEMICONDUCTOR */
+      .card-semiconductor .portal-card { border-color: rgba(0, 255, 210, 0.12); }
+      .card-semiconductor .card-hud-corner { border-color: var(--neon-semiconductor); }
+      .card-semiconductor .card-icon-box { color: var(--neon-semiconductor); background: rgba(0, 255, 210, 0.04); border-color: rgba(0, 255, 210, 0.15); box-shadow: 0 0 10px rgba(0, 255, 210, 0.05); }
+      .card-semiconductor .card-badge { color: var(--neon-semiconductor); background: rgba(0, 255, 210, 0.1); border-color: rgba(0, 255, 210, 0.2); }
+      .card-semiconductor .card-arrow-link { color: var(--neon-semiconductor); }
+      .card-semiconductor .portal-node { border-color: var(--neon-semiconductor); box-shadow: 0 0 8px rgba(0, 255, 210, 0.4); }
+
+      .card-semiconductor:hover .portal-card {
+        border-color: rgba(0, 255, 210, 0.3);
+        box-shadow: 0 0 30px rgba(0, 255, 210, 0.08);
+        transform: translateY(-4px) scale(1.02);
+        background: rgba(10, 22, 20, 0.72);
+      }
+      .card-semiconductor:hover .card-hud-corner { opacity: 0.9; width: 14px; height: 14px; }
+      .card-semiconductor:hover .card-icon-box { background: var(--neon-semiconductor); color: #03040a; box-shadow: 0 0 14px var(--neon-semiconductor); }
+      .card-semiconductor:hover .card-arrow-link svg { transform: translateX(4px); }
+      .card-semiconductor:hover .portal-node { background: var(--neon-semiconductor); box-shadow: 0 0 14px var(--neon-semiconductor); }
+
       /* NORMAL CARDS (Coming Soon) */
       .card-normal { cursor: default; }
       .card-normal .portal-card {
@@ -594,7 +675,7 @@
         <!-- 03. Kỹ thuật phần mềm -->
         <div class="portal-row left-align">
           <div class="portal-node"></div>
-          <div class="card-wrapper card-normal">
+          <a href="./software.html" class="card-wrapper card-software">
             <div class="portal-card">
               <div class="card-hud-corner top-left"></div>
               <div class="card-hud-corner bottom-right"></div>
@@ -605,18 +686,19 @@
                 </div>
                 <div class="card-title-box">
                   <h3>Kỹ thuật phần mềm</h3>
-                  <span class="card-badge">Coming Soon</span>
+                  <span class="card-badge">3D Experience</span>
                 </div>
               </div>
               <p>Thiết kế, xây dựng và quản lý các vòng đời hệ thống ứng dụng phần mềm doanh nghiệp lớn, tối ưu hóa quy trình kiểm thử và chất lượng sản phẩm.</p>
               <div class="card-cta-line">
                 <span class="card-stat">ISO 27001 STANDARD</span>
-                <span class="card-arrow-link" style="opacity: 0.3; pointer-events: none;">
-                  Chưa mở
+                <span class="card-arrow-link">
+                  Vào Không Gian 3D
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- 04. Trí tuệ nhân tạo -->
@@ -679,7 +761,7 @@
         <!-- 06. An toàn thông tin -->
         <div class="portal-row right-align">
           <div class="portal-node"></div>
-          <div class="card-wrapper card-normal">
+          <a href="./security.html" class="card-wrapper card-security">
             <div class="portal-card">
               <div class="card-hud-corner top-left"></div>
               <div class="card-hud-corner bottom-right"></div>
@@ -690,24 +772,25 @@
                 </div>
                 <div class="card-title-box">
                   <h3>An toàn thông tin</h3>
-                  <span class="card-badge">Coming Soon</span>
+                  <span class="card-badge">3D Experience</span>
                 </div>
               </div>
               <p>Phát hiện lỗ hổng hệ thống mạng, triển khai các kỹ thuật mã hóa dữ liệu bảo mật nâng cao và các giải pháp chống tấn công mạng.</p>
               <div class="card-cta-line">
                 <span class="card-stat">CYBER SECURITY</span>
-                <span class="card-arrow-link" style="opacity: 0.3; pointer-events: none;">
-                  Chưa mở
+                <span class="card-arrow-link">
+                  Vào Không Gian 3D
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- 07. Thiết kế vi mạch bán dẫn -->
         <div class="portal-row left-align">
           <div class="portal-node"></div>
-          <div class="card-wrapper card-normal">
+          <a href="./semiconductor.html" class="card-wrapper card-semiconductor">
             <div class="portal-card">
               <div class="card-hud-corner top-left"></div>
               <div class="card-hud-corner bottom-right"></div>
@@ -718,18 +801,19 @@
                 </div>
                 <div class="card-title-box">
                   <h3>Thiết kế vi mạch bán dẫn</h3>
-                  <span class="card-badge">Coming Soon</span>
+                  <span class="card-badge">3D Experience</span>
                 </div>
               </div>
               <p>Đào tạo nền tảng phần cứng thông minh, vẽ sơ đồ và sản xuất các kiến trúc Chip silicon bán dẫn công nghệ cao phục vụ tương lai thiết bị.</p>
               <div class="card-cta-line">
                 <span class="card-stat">SILICON DESIGN</span>
-                <span class="card-arrow-link" style="opacity: 0.3; pointer-events: none;">
-                  Chưa mở
+                <span class="card-arrow-link">
+                  Vào Không Gian 3D
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- 08. Công nghệ ô tô số -->
@@ -764,7 +848,7 @@
         <!-- 09. Hệ thống thông tin -->
         <div class="portal-row left-align">
           <div class="portal-node"></div>
-          <div class="card-wrapper card-normal">
+          <a href="./infosys.html" class="card-wrapper card-infosys">
             <div class="portal-card">
               <div class="card-hud-corner top-left"></div>
               <div class="card-hud-corner bottom-right"></div>
@@ -775,18 +859,19 @@
                 </div>
                 <div class="card-title-box">
                   <h3>Hệ thống thông tin</h3>
-                  <span class="card-badge">Coming Soon</span>
+                  <span class="card-badge">3D Experience</span>
                 </div>
               </div>
               <p>Quản trị luồng thông tin doanh nghiệp, quy hoạch và tối ưu hóa hệ thống cơ sở dữ liệu lớn đáp ứng hoàn chỉnh bảo mật & hiệu suất cao.</p>
               <div class="card-cta-line">
                 <span class="card-stat">ERP & DATABASE</span>
-                <span class="card-arrow-link" style="opacity: 0.3; pointer-events: none;">
-                  Chưa mở
+                <span class="card-arrow-link">
+                  Vào Không Gian 3D
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- 10. Thiết kế đồ họa và mỹ thuật số -->
@@ -944,7 +1029,11 @@
             "https://prod.spline.design/l-z4rkSuwU9lDO-9/scene.splinecode", // IT
             "https://prod.spline.design/e4D1T6fh6czHZWtu/scene.splinecode", // Robot & AI
             "https://prod.spline.design/eubA1DkR-mlMa4SF/scene.splinecode", // Automotive
-            "https://prod.spline.design/5LNQT-8gecn6Kupz/scene.splinecode"  // AI
+            "https://prod.spline.design/5LNQT-8gecn6Kupz/scene.splinecode", // AI
+            "https://prod.spline.design/VKxTBSIgEO4zdKe8/scene.splinecode", // Security
+            "https://prod.spline.design/KvZkPS1S-uMNFh0G/scene.splinecode", // InfoSys
+            "https://prod.spline.design/6CWre6Fx6MlPcS9v/scene.splinecode", // Software
+            "https://prod.spline.design/85JDcEdRpQj-jze2/scene.splinecode"  // Semiconductor
           ];
 
           const schedulePreload = window.requestIdleCallback || ((cb) => setTimeout(cb, 1000));
