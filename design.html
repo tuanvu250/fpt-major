@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thiết kế đồ họa và mỹ thuật số — Digital Art & Design · FPT University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://prod.spline.design/E9mlCyJZVbRqJ7EE/scene.splinecode" as="fetch" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
+    <style>
+      :root {
+        --neon-design: #ff007f; /* Cyber Pink representing creativity, digital art and vibrant style */
+        --text-design: #ffffff;
+        --sub-design: #c8d4e8;
+        --dim-design: rgba(255,255,255,0.5);
+        --neon-preloader: var(--neon-design);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: "Montserrat", Arial, "Helvetica Neue", Helvetica, sans-serif;
+        background: #03040a;
+        color: var(--text-design);
+        overflow-x: hidden;
+      }
+
+      /* hide spline watermark for Digital Art & Design */
+      #design-viewer::part(logo) { display: none !important; }
+      .spline-cover-design {
+        position: absolute;
+        right: 0; bottom: 0;
+        width: 220px; height: 56px;
+        z-index: 8;
+        background: linear-gradient(135deg, transparent 30%, rgba(3,4,10,0.98) 65%);
+        pointer-events: none;
+      }
+
+      /* ── NAV DESIGN ── */
+      .nav-design {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 50;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        border-bottom: 1px solid rgba(255,0,127,0.2);
+        background: rgba(3,4,10,0.82);
+        backdrop-filter: blur(14px);
+      }
+      .nav-brand-design {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      .nav-tag-design {
+        font-size: 13px;
+        color: var(--neon-design);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      /* ── EXPERIENCE DESIGN ── */
+      .experience-design { position: relative; min-height: 520vh; }
+      .sticky-stage-design {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      #design-viewer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* vignette darkens corners so text is readable */
+      .vignette-design {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse 52% 52% at 50% 52%,
+          transparent 30%,
+          rgba(3,5,14,0.72) 100%
+        );
+      }
+
+      /* grid matching index.html */
+      .grid-design {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255,0,127,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,0,127,0.03) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+
+      /* ── SVG ART LINES BLUEPRINT ── */
+      .svg-arrows-design {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        pointer-events: none;
+        overflow: visible;
+      }
+      .tech-line-design {
+        stroke: rgba(255, 0, 127, 0.08);
+        stroke-width: 1px;
+        stroke-dasharray: 4 8;
+      }
+      .radar-ring-design {
+        fill: none;
+        stroke: var(--neon-design);
+        stroke-width: 1.2px;
+        opacity: 0;
+        transform-origin: 720px 580px;
+      }
+      @keyframes radar-pulse-design {
+        0% { transform: scale(0.6); opacity: 0; }
+        15% { opacity: 0.45; }
+        100% { transform: scale(1.3); opacity: 0; }
+      }
+      .radar-ring-design.ring-1 { animation: radar-pulse-design 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; }
+      .radar-ring-design.ring-2 { animation: radar-pulse-design 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 1.5s; }
+      .radar-ring-design.ring-3 { animation: radar-pulse-design 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 3s; }
+
+      .neural-node-design {
+        fill: var(--neon-design);
+        opacity: 0.3;
+        transition: all 0.4s ease;
+      }
+      .neural-node-design.active-glow {
+        animation: pulse-node-design 2.5s ease-in-out infinite;
+      }
+      @keyframes pulse-node-design {
+        0%, 100% { opacity: 0.3; r: 3.5; }
+        50% { opacity: 0.9; r: 6.5; fill: #ffffff; filter: drop-shadow(0 0 5px var(--neon-design)); }
+      }
+      .sensing-line-design {
+        stroke: rgba(255, 0, 127, 0.4);
+        stroke-width: 1px;
+        stroke-dasharray: 2 3;
+      }
+
+      /* ── PANELS DESIGN (HUD GLOW & BRACKETS) ── */
+      .panel-design {
+        position: absolute;
+        z-index: 10;
+        width: clamp(320px, 27vw, 450px);
+        opacity: 0;
+        will-change: opacity, transform;
+        padding: 22px 24px;
+        background: rgba(3, 4, 10, 0.86);
+        border: 1.5px solid rgba(255, 0, 127, 0.16);
+        backdrop-filter: blur(16px);
+        border-radius: 6px;
+        transition: border-color 0.4s, box-shadow 0.4s;
+      }
+      .panel-design.active {
+        border-color: rgba(255, 0, 127, 0.28);
+        box-shadow: 0 0 24px rgba(255, 0, 127, 0.06);
+      }
+      .hud-bracket-design {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border: 1.5px solid var(--neon-design);
+        opacity: 0.4;
+        pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .hud-bracket-design.top-left {
+        top: -2px; left: -2px;
+        border-right: none; border-bottom: none;
+      }
+      .hud-bracket-design.bottom-right {
+        bottom: -2px; right: -2px;
+        border-left: none; border-top: none;
+      }
+      .panel-design.active .hud-bracket-design {
+        opacity: 0.9;
+        width: 22px;
+        height: 22px;
+        box-shadow: 0 0 6px var(--neon-design);
+      }
+      .hud-sys-status-design {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--dim-design);
+        position: absolute;
+        top: 8px;
+        right: 14px;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+      }
+      .panel-design.active .hud-sys-status-design {
+        color: var(--neon-design);
+        opacity: 0.9;
+        animation: blink-text-design 1.8s steps(2, start) infinite;
+      }
+      @keyframes blink-text-design {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+
+      .p-tag-design {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--neon-design);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .p-tag-design::before {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        background: var(--neon-design);
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 6px var(--neon-design);
+        animation: glow-design 1.6s ease-in-out infinite;
+      }
+      @keyframes glow-design {
+        0%,100% { opacity: 0.4; box-shadow: 0 0 4px var(--neon-design); }
+        50% { opacity: 1; box-shadow: 0 0 10px var(--neon-design); }
+      }
+      .panel-design h2 {
+        font-size: clamp(24px, 2.2vw, 32px);
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.25;
+        letter-spacing: -0.015em;
+        margin-bottom: 12px;
+      }
+      .panel-design p {
+        font-size: 17.5px;
+        line-height: 1.6;
+        font-weight: 600;
+        color: #ffffff;
+      }
+      .panel-design ul {
+        list-style: none;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 0;
+      }
+      .panel-design li {
+        font-size: 16.5px;
+        line-height: 1.5;
+        font-weight: 600;
+        color: #ffffff;
+        padding-left: 16px;
+        position: relative;
+      }
+      .panel-design li::before {
+        content: '›';
+        position: absolute;
+        left: 0;
+        color: var(--neon-design);
+        font-weight: 800;
+      }
+      .panel-design li strong { color: #ffffff; font-weight: 700; }
+
+      /* stats design */
+      .stats-design {
+        display: flex;
+        gap: 14px;
+        margin-top: 14px;
+        margin-bottom: 12px;
+      }
+      .stat-design {
+        flex: 1;
+        border-top: 2px solid var(--neon-design);
+        padding-top: 10px;
+      }
+      .stat-num-design {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--neon-design);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .stat-label-design {
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.7);
+        margin-top: 4px;
+        letter-spacing: 0.03em;
+      }
+      .salary-design {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.6;
+        border-top: 1px solid rgba(255,255,255,0.15);
+        padding-top: 12px;
+      }
+      .salary-design strong { color: #ffffff; font-weight: 700; }
+
+      /* positions design */
+      .tl-design { top: 60px; left: 22px; }
+      .bl-design { bottom: 26px; left: 22px; }
+      .tr-design { top: 60px; right: 22px; }
+      .br-design { bottom: 26px; right: 22px; }
+
+      /* right-side panels styling design */
+      .tr-design, .br-design { text-align: right; }
+      .tr-design .p-tag-design, .br-design .p-tag-design { justify-content: flex-end; flex-direction: row-reverse; }
+      .tr-design .panel-design li, .br-design .panel-design li { padding-left: 0; padding-right: 14px; }
+      .tr-design .panel-design li::before, .br-design .panel-design li::before { left: auto; right: 0; }
+      .tr-design .stat-design, .br-design .stat-design { text-align: right; }
+
+      /* scroll hint design */
+      .scroll-hint-design {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 7px;
+        color: rgba(255,0,127,0.5);
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      .scroll-hint-design::after {
+        content: '';
+        width: 1px;
+        height: 32px;
+        background: linear-gradient(to bottom, var(--neon-design), transparent);
+        animation: drop-design 1.8s ease-in-out infinite;
+      }
+      @keyframes drop-design {
+        0%,100% { opacity: 0.2; transform: scaleY(0.4) translateY(-10px); }
+        60% { opacity: 1; transform: scaleY(1) translateY(0); }
+      }
+
+      .footer-design {
+        padding: 24px 20px 48px;
+        text-align: center;
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: rgba(255,0,127,0.3);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* ── MOBILE DESIGN ── */
+      @media (max-width: 1100px) {
+        .experience-design { min-height: auto; }
+        .sticky-stage-design { position: static; height: 64vh; }
+        #design-viewer { position: relative; height: 64vh; }
+        .panel-design {
+          position: static;
+          width: 100%;
+          opacity: 1 !important;
+          transform: none !important;
+          padding: 14px 16px;
+          border-left: 2px solid var(--neon-design);
+          margin-bottom: 2px;
+          background: rgba(5,7,18,0.9);
+        }
+        .tr-design,.br-design { text-align:left; border-left:2px solid var(--neon-design); }
+        .tr-design .p-tag-design,.br-design .p-tag-design { justify-content:flex-start; flex-direction:row; }
+        .svg-arrows-design,.grid-design,.scroll-hint-design,.vignette-design { display:none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .panel-design { opacity:1!important; transform:none!important; }
+        .p-tag-design::before { animation:none; opacity:1; }
+        .scroll-hint-design { display:none; }
+      }
+
+      /* ── COMPACT STAGE LIST DESIGN ── */
+      .stage-list-design {
+        position: relative;
+        padding-left: 24px;
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      .stage-list-design::before {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 12px;
+        bottom: 12px;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--neon-design) 0%, rgba(255,0,127,0.15) 100%);
+      }
+      .stage-item-design {
+        display: grid;
+        grid-template-columns: 32px 1fr auto;
+        align-items: center;
+        gap: 6px 10px;
+        padding: 6px 0;
+        position: relative;
+      }
+      .stage-item-design::before {
+        content: '';
+        position: absolute;
+        left: -24px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #0a0d1c;
+        border: 2px solid rgba(255,0,127,0.4);
+      }
+      .stage-item-design.active::before {
+        background: var(--neon-design);
+        border-color: var(--neon-design);
+        box-shadow: 0 0 10px rgba(255,0,127,0.8);
+      }
+      .si-badge-design {
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--neon-design);
+        letter-spacing: 0.06em;
+      }
+      .si-name-design {
+        font-size: 15.5px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.35;
+      }
+      .stage-item-design.active .si-name-design { color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(255,0,127,0.3); }
+      .si-time-design {
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(255,0,127,0.85);
+        white-space: nowrap;
+        letter-spacing: 0.03em;
+      }
+      .stage-item-design.active .si-time-design { color: rgba(255,0,127,1); }
+
+      /* Quay lai button */
+      .back-btn-design {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        color: var(--neon-design);
+        font-family: 'Space Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        border: 1px solid rgba(255,0,127,0.3);
+        padding: 4px 12px;
+        border-radius: 4px;
+        background: rgba(255,0,127,0.03);
+        transition: all 0.3s ease;
+      }
+      .back-btn-design:hover {
+        background: var(--neon-design);
+        color: #03040a;
+        box-shadow: 0 0 12px var(--neon-design);
+      }
+
+      /* ── CYBER PRELOADER ── */
+      .cyber-preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #03040a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+      }
+      .preloader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+      .tech-ring-wrapper {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tech-ring-outer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 2px dashed var(--neon-preloader);
+        border-radius: 50%;
+        animation: spin-outer 12s linear infinite;
+        opacity: 0.6;
+      }
+      .tech-ring-inner {
+        position: absolute;
+        width: 82%;
+        height: 82%;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-top: 2.5px solid var(--neon-preloader);
+        border-radius: 50%;
+        animation: spin-inner 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+      }
+      .percent-counter {
+        font-family: "Space Mono", monospace;
+        font-size: 24px;
+        font-weight: 700;
+        color: #ffffff;
+        text-shadow: 0 0 8px var(--neon-preloader);
+      }
+      @keyframes spin-outer {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes spin-inner {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(-360deg); }
+      }
+      .boot-logs {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.35);
+        width: 290px;
+        height: 52px;
+        overflow: hidden;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 6px 12px;
+        border-left: 2px solid var(--neon-preloader);
+        background: rgba(255, 255, 255, 0.01);
+      }
+      .log-line {
+        line-height: 1.3;
+        animation: blink-log-line 0.15s ease-out forwards;
+      }
+      .log-line.success {
+        color: var(--neon-preloader);
+      }
+      @keyframes blink-log-line {
+        0% { opacity: 0; transform: translateY(3px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Cyber Tech Preloader -->
+    <div class="cyber-preloader" id="cyber-preloader">
+      <div class="preloader-content">
+        <div class="tech-ring-wrapper">
+          <div class="tech-ring-outer"></div>
+          <div class="tech-ring-inner"></div>
+          <div class="percent-counter" id="percent-counter">00%</div>
+        </div>
+        <div class="boot-logs" id="boot-logs">
+          <div class="log-line">> CORE SYSTEM START...</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav-design">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="./index.html" class="back-btn-design">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Quay lại
+        </a>
+        <span class="nav-brand-design">FPT · DIGITAL ART & DESIGN</span>
+      </div>
+      <span class="nav-tag-design">Thiết kế đồ họa và mỹ thuật số · UI/UX Design · Motion Graphics</span>
+    </nav>
+
+    <section class="experience-design">
+      <div class="sticky-stage-design">
+
+        <spline-viewer id="design-viewer" loading="eager" unload-sound="true" muted="true" url="https://prod.spline.design/E9mlCyJZVbRqJ7EE/scene.splinecode"></spline-viewer>
+        <div class="spline-cover-design" aria-hidden="true"></div>
+        <div class="grid-design" aria-hidden="true"></div>
+        <div class="vignette-design" aria-hidden="true"></div>
+
+        <!-- SVG ART BLUEPRINT MATRIX -->
+        <svg class="svg-arrows-design" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+          <line class="tech-line-design" x1="50" y1="580" x2="1390" y2="580" />
+          <line class="tech-line-design" x1="720" y1="50" x2="720" y2="850" />
+
+          <!-- Vòng quét nghệ thuật -->
+          <g class="radar-scan-design">
+            <ellipse class="radar-ring-design ring-1" cx="720" cy="580" rx="170" ry="51" />
+            <ellipse class="radar-ring-design ring-2" cx="720" cy="580" rx="270" ry="81" />
+            <ellipse class="radar-ring-design ring-3" cx="720" cy="580" rx="370" ry="111" />
+          </g>
+
+          <!-- Nodes định vị mạng dữ liệu -->
+          <circle class="neural-node-design active-glow" cx="660" cy="410" r="4" />
+          <line class="sensing-line-design" x1="660" y1="410" x2="660" y2="390" />
+
+          <circle class="neural-node-design active-glow" cx="540" cy="530" r="4" />
+          <line class="sensing-line-design" x1="540" y1="530" x2="540" y2="550" />
+
+          <circle class="neural-node-design active-glow" cx="780" cy="410" r="4" />
+          <line class="sensing-line-design" x1="780" y1="410" x2="780" y2="390" />
+
+          <circle class="neural-node-design active-glow" cx="880" cy="500" r="4" />
+          <line class="sensing-line-design" x1="880" y1="500" x2="880" y2="520" />
+          
+          <circle class="neural-node-design" cx="420" cy="160" r="3" />
+          <circle class="neural-node-design" cx="420" cy="740" r="3" />
+          <circle class="neural-node-design" cx="1020" cy="160" r="3" />
+          <circle class="neural-node-design" cx="1020" cy="740" r="3" />
+        </svg>
+
+        <!-- 01 Tổng quan -->
+        <div class="panel-design tl-design" id="p1-design">
+          <div class="hud-bracket-design top-left"></div>
+          <div class="hud-bracket-design bottom-right"></div>
+          <div class="hud-sys-status-design">ART_ENGINE: ACTIVE</div>
+          <div class="p-tag-design">01 · Tổng quan ngành</div>
+          <h2>Thiết kế đồ họa &amp; Mỹ thuật số</h2>
+          <p>Điểm chạm giữa công nghệ và cảm xúc thị giác. Đào tạo tư duy thẩm mỹ hiện đại, ứng dụng công cụ kỹ thuật số hàng đầu để thiết kế giao diện UX/UI, đồ họa chuyển động (Motion), kỹ xảo điện ảnh và bản sắc thương hiệu kỷ nguyên mới.</p>
+        </div>
+
+        <!-- 02 Điểm nổi bật -->
+        <div class="panel-design bl-design" id="p2-design">
+          <div class="hud-bracket-design top-left"></div>
+          <div class="hud-bracket-design bottom-right"></div>
+          <div class="hud-sys-status-design">RENDER_PIPELINE: 100%</div>
+          <div class="p-tag-design">02 · Điểm nổi bật</div>
+          <h2>Đặc trưng đào tạo</h2>
+          <ul>
+            <li><strong>Mỹ thuật ứng dụng cao</strong> — Học sâu về nguyên lý thiết kế, bố cục, màu sắc và typography.</li>
+            <li><strong>Công nghệ dẫn đầu</strong> — Thực hành chuyên nghiệp Figma, Adobe CC (Photoshop, Illustrator, Premiere), Blender.</li>
+            <li><strong>Xưởng đồ họa OJT</strong> — Trải nghiệm dự án thực tế tại các Agency, Studio quảng cáo lớn từ học kỳ 6.</li>
+            <li><strong>Đại học FPT Arena</strong> — Mở rộng mạng lưới kết nối cộng đồng sáng tạo nghệ thuật số quy mô lớn.</li>
+          </ul>
+        </div>
+
+        <!-- 03 Cơ hội nghề nghiệp -->
+        <div class="panel-design tr-design" id="p3-design">
+          <div class="hud-bracket-design top-left"></div>
+          <div class="hud-bracket-design bottom-right"></div>
+          <div class="hud-sys-status-design">CREATIVE_MARKET: HIGH</div>
+          <div class="p-tag-design">03 · Cơ hội & Mức lương</div>
+          <h2>Thị trường sáng tạo</h2>
+          <div class="stats-design">
+            <div class="stat-design">
+              <div class="stat-num-design">15-22M</div>
+              <div class="stat-label-design">Khởi điểm Fresher</div>
+            </div>
+            <div class="stat-design">
+              <div class="stat-num-design">45-90M+</div>
+              <div class="stat-label-design">Art / Creative Director</div>
+            </div>
+          </div>
+          <div class="salary-design">
+            Nhu cầu nhân lực sáng tạo nội dung số **tăng trưởng phi mã** cùng xu thế thương mại điện tử, truyền thông số và đa phương tiện.
+          </div>
+        </div>
+
+        <!-- 04 Lộ trình -->
+        <div class="panel-design br-design" id="p4-design">
+          <div class="hud-bracket-design top-left"></div>
+          <div class="hud-bracket-design bottom-right"></div>
+          <div class="hud-sys-status-design">ACADEMIC_MAP: V2.1</div>
+          <div class="p-tag-design">04 · Lộ trình 5 giai đoạn</div>
+          <h2>Lộ trình Học tập</h2>
+          <div class="stage-list-design">
+            <div class="stage-item-design active">
+              <span class="si-badge-design">GĐ1</span>
+              <span class="si-name-design">Nguyên lý thị giác, Hình họa &amp; Bố cục cơ bản</span>
+              <span class="si-time-design">HK 1–3</span>
+            </div>
+            <div class="stage-item-design">
+              <span class="si-badge-design">GĐ2</span>
+              <span class="si-name-design">Thiết kế đồ họa 2D, Minh họa số &amp; Typography</span>
+              <span class="si-time-design">HK 4–5</span>
+            </div>
+            <div class="stage-item-design">
+              <span class="si-badge-design">GĐ3</span>
+              <span class="si-name-design">Thực tập OJT cọ xát thực tế tại Studio/Agency</span>
+              <span class="si-time-design">HK 6</span>
+            </div>
+            <div class="stage-item-design">
+              <span class="si-badge-design">GĐ4</span>
+              <span class="si-name-design">Thiết kế UI/UX, Đồ họa 3D &amp; Motion Graphics</span>
+              <span class="si-time-design">HK 7–8</span>
+            </div>
+            <div class="stage-item-design">
+              <span class="si-badge-design">GĐ5</span>
+              <span class="si-name-design">Đồ án tốt nghiệp triển lãm nghệ thuật truyền thông số</span>
+              <span class="si-time-design">HK 9</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-hint-design" aria-hidden="true">Scroll</div>
+      </div>
+    </section>
+
+    <footer class="footer-design">FPT University · Thiết kế đồ họa và mỹ thuật số · 2026</footer>
+
+    <script>
+      (function() {
+        // Tắt tiếng triệt để (Audio Killer) bằng cách vô hiệu hóa hoàn toàn AudioContext của trình duyệt
+        try {
+          const OriginalAudioContext = window.AudioContext || window.webkitAudioContext;
+          if (OriginalAudioContext) {
+            const ProxyAudioContext = function(...args) {
+              const context = new OriginalAudioContext(...args);
+              context.suspend();
+              context.resume = () => Promise.resolve();
+              return context;
+            };
+            window.AudioContext = ProxyAudioContext;
+            if (window.webkitAudioContext) window.webkitAudioContext = ProxyAudioContext;
+          }
+        } catch (e) {
+          console.warn("Mute AudioContext failed:", e);
+        }
+
+        // Safe check to wait for GSAP
+        const initDesignAnimations = () => {
+          if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+            setTimeout(initDesignAnimations, 50);
+            return;
+          }
+
+          gsap.registerPlugin(ScrollTrigger);
+
+          const desktop = window.matchMedia("(min-width: 1101px)").matches;
+          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          if (desktop && !reduceMotion) {
+            // 1. Hoạt ảnh Intro ban đầu chỉ cho duy nhất panel 1 (Thông tin chung)
+            gsap.fromTo("#p1-design", 
+              { opacity: 0, x: -35, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.8, ease: "power2.out", onComplete: () => document.querySelector("#p1-design").classList.add("active") }
+            );
+
+            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel tiếp theo lần lượt trượt vào khi cuộn xuống
+            const scrollItems = [
+              { panel: "#p2-design", offset: 15, startX: -35 },
+              { panel: "#p3-design", offset: 35, startX: 35 },
+              { panel: "#p4-design", offset: 55, startX: 35 },
+            ];
+
+            scrollItems.forEach(({ panel, offset, startX }) => {
+              const pEl = document.querySelector(panel);
+              if (!pEl) return;
+
+              gsap.fromTo(panel,
+                { opacity: 0, x: startX, y: 10, scale: 0.97 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  scale: 1,
+                  scrollTrigger: {
+                    trigger: ".experience-design",
+                    start: `top+=${offset}% center`,
+                    end: `top+=${offset + 15}% center`,
+                    scrub: 0.8,
+                    onEnter: () => pEl.classList.add("active"),
+                    onLeave: () => pEl.classList.remove("active"),
+                    onEnterBack: () => pEl.classList.add("active"),
+                    onLeaveBack: () => pEl.classList.remove("active"),
+                  }
+                }
+              );
+            });
+
+            gsap.to(".scroll-hint-design", {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: ".experience-design",
+                start: "top+4% top",
+                end: "top+9% top",
+                scrub: true,
+              },
+            });
+          }
+        };
+
+        initDesignAnimations();
+
+        // Setup và điều khiển Cyber Preloader
+        const preloader = document.getElementById("cyber-preloader");
+        const percentCounter = document.getElementById("percent-counter");
+        const bootLogs = document.getElementById("boot-logs");
+
+        const logMessages = [
+          { text: "> CONNECTING TO CREATIVE STUDIO LAYER...", time: 200 },
+          { text: "> LOADING VECTOR_CANVAS.SPLINECODE...", time: 600 },
+          { text: "> CACHING RENDER SHADERS AND GEOMETRY...", time: 1100 },
+          { text: "> ESTABLISHING ART COMPOSITION ENVIRONMENT...", time: 1700 }
+        ];
+
+        let percent = 0;
+        let progressInterval = setInterval(() => {
+          if (percent < 98) {
+            percent += Math.floor(Math.random() * 3) + 1;
+            if (percent > 98) percent = 98;
+            if (percentCounter) percentCounter.textContent = (percent < 10 ? "0" : "") + percent + "%";
+          }
+        }, 50);
+
+        logMessages.forEach(msg => {
+          setTimeout(() => {
+            if (preloader && preloader.style.opacity !== "0") {
+              const div = document.createElement("div");
+              div.className = "log-line";
+              div.textContent = msg.text;
+              bootLogs.appendChild(div);
+              bootLogs.scrollTop = bootLogs.scrollHeight;
+            }
+          }, msg.time);
+        });
+
+        const hidePreloader = () => {
+          if (preloader && preloader.style.opacity !== "0") {
+            clearInterval(progressInterval);
+            if (percentCounter) percentCounter.textContent = "100%";
+            
+            const div = document.createElement("div");
+            div.className = "log-line success";
+            div.textContent = "> CREATIVE RENDERING NODE COMPILED // 100%";
+            bootLogs.appendChild(div);
+            bootLogs.scrollTop = bootLogs.scrollHeight;
+
+            setTimeout(() => {
+              preloader.style.opacity = "0";
+              preloader.style.visibility = "hidden";
+            }, 450);
+          }
+        };
+
+        // Inject style into shadow DOM of design-viewer to hide watermark
+        const viewer = document.getElementById("design-viewer");
+        if (viewer) {
+          const hideWatermark = () => {
+            try {
+              const shadow = viewer.shadowRoot;
+              if (!shadow) return;
+              if (!shadow.querySelector("#spline-hide-art")) {
+                const style = document.createElement("style");
+                style.id = "spline-hide-art";
+                style.textContent = `
+                  #logo, a[href*="spline"], [class*="logo"], [id*="logo"],
+                  div[style*="position: fixed"], div[style*="position:fixed"] { display: none !important; }
+                `;
+                shadow.appendChild(style);
+              }
+            } catch (_) {}
+          };
+          viewer.addEventListener("load", () => {
+            hideWatermark();
+            
+            // Programmatically hide built-in floating lines, pointers, and dots in the Spline scene
+            try {
+              const splineApp = viewer.spline;
+              if (splineApp && splineApp.scene) {
+                splineApp.scene.traverse((obj) => {
+                  const name = obj.name ? obj.name.toLowerCase() : "";
+                  if (
+                    name.includes("pointer") || 
+                    name.includes("line") || 
+                    name.includes("dot") || 
+                    name.includes("circle") || 
+                    name.includes("arrow") || 
+                    name.includes("target") || 
+                    name.includes("glow") ||
+                    name.includes("bracket") ||
+                    name.includes("connector") ||
+                    name.includes("link") ||
+                    name.includes("ui") ||
+                    name.includes("panel")
+                  ) {
+                    if (!name.includes("screen") && !name.includes("computer") && !name.includes("body") && !name.includes("keyboard") && !name.includes("mouse") && !name.includes("desk") && !name.includes("table")) {
+                      obj.visible = false;
+                    }
+                  }
+                });
+              }
+            } catch (e) {
+              console.warn("Hiding built-in 3D lines failed:", e);
+            }
+            
+            hidePreloader();
+            setTimeout(hideWatermark, 300);
+            setTimeout(hideWatermark, 800);
+          });
+          
+          // Fallback preloader hide
+          setTimeout(hidePreloader, 6500);
+          setTimeout(hideWatermark, 1000);
+          setTimeout(hideWatermark, 2000);
+        }
+      })();
+    </script>
+  </body>
+</html>

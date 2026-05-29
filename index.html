@@ -6,9 +6,9 @@
     <title>Cổng kết nối Chuyên ngành — Cyber Major Portal · FPT University</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="https://prod.spline.design/PJRa9ScE8Vszwb8M/scene.splinecode" as="fetch" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
+    <link rel="preload" href="https://prod.spline.design/ewC1T9Lh0ZWOsRqo/scene.splinecode" as="fetch" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
     <style>
       :root {
         --neon-orange: #ff7a1a;
@@ -19,6 +19,8 @@
         --neon-infosys: #ffaa00;
         --neon-software: #8b5cf6;
         --neon-semiconductor: #00ffd2;
+        --neon-datascience: #00a2ff;
+        --neon-design: #ff007f;
         --text-main: #ffffff;
         --text-sub: #c8d4e8;
         --text-dim: rgba(255,255,255,0.4);
@@ -26,7 +28,7 @@
 
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { scroll-behavior: smooth; }
-      body { background: #03040a; font-family: "Space Grotesk", system-ui, sans-serif; color: var(--text-main); overflow-x: hidden; }
+      body { background: #03040a; font-family: "Montserrat", system-ui, sans-serif; color: var(--text-main); overflow-x: hidden; }
 
       /* Custom scrollbar */
       ::-webkit-scrollbar { width: 8px; }
@@ -50,6 +52,187 @@
         pointer-events: none;
       }
       #intro-viewer::part(logo) { display: none !important; }
+
+      .intro-vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background:
+          linear-gradient(to right,
+            rgba(3,4,10,0.9) 0%,
+            rgba(3,4,10,0.55) 18%,
+            transparent 36%,
+            transparent 64%,
+            rgba(3,4,10,0.55) 82%,
+            rgba(3,4,10,0.9) 100%),
+          linear-gradient(to bottom, rgba(3,4,10,0.5) 0%, transparent 20%, transparent 78%, rgba(3,4,10,0.72) 100%);
+      }
+
+      /* Hai cột trái–phải, robot ở giữa */
+      .intro-hero {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(26%, 38vw) minmax(0, 1fr);
+        align-items: center;
+        padding: 5vh 0 14vh;
+        pointer-events: none;
+      }
+      .intro-col {
+        display: flex;
+        align-items: center;
+        min-height: 0;
+        opacity: 0;
+        transition: opacity 0.75s ease, transform 0.75s ease;
+      }
+      .intro-col-left {
+        grid-column: 1;
+        justify-content: flex-end;
+        padding-left: clamp(20px, 3.5vw, 56px);
+        padding-right: clamp(12px, 1.5vw, 24px);
+        transform: translateX(-28px);
+      }
+      .intro-col-right {
+        grid-column: 3;
+        justify-content: flex-start;
+        padding-right: clamp(20px, 3.5vw, 56px);
+        padding-left: clamp(12px, 1.5vw, 24px);
+        transform: translateX(28px);
+      }
+      .intro-hero.show .intro-col-left,
+      .intro-hero.show .intro-col-right {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .intro-hero.show .intro-col-right { transition-delay: 0.12s; }
+      .intro-panel {
+        width: 100%;
+        max-width: min(38vw, 520px);
+        padding: clamp(10px, 1.5vw, 24px) 0; /* Giảm padding để chữ tự nhiên hơn */
+        background: transparent; /* Loại bỏ hoàn toàn nền */
+        backdrop-filter: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .intro-panel-left {
+        text-align: right;
+        border: none;
+        background: transparent;
+      }
+      .intro-panel-right {
+        text-align: left;
+        border: none;
+        background: transparent;
+      }
+      .intro-eyebrow {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(13px, 1.1vw, 18px);
+        color: var(--neon-orange);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: clamp(14px, 1.5vh, 22px);
+        text-shadow: 0 0 12px rgba(255, 122, 26, 0.5), 0 2px 8px rgba(0, 0, 0, 0.9);
+      }
+      .intro-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(34px, 3.6vw, 68px);
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        line-height: 1.14;
+        margin-bottom: 0;
+        background: linear-gradient(to bottom, #ffffff 40%, #e2eaf8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.98)); /* Giúp text gradient nổi bần bật trên nền 3D */
+      }
+      .intro-tags-label {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(12px, 1vw, 15px);
+        font-weight: 700;
+        color: var(--neon-orange);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: clamp(14px, 1.5vh, 20px);
+        display: block;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+      }
+      .intro-desc {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(16.5px, 1.6vw, 24px);
+        line-height: 1.65;
+        font-weight: 500;
+        color: #ffffff; /* Sáng trắng hoàn toàn tăng độ tương phản */
+        margin-bottom: clamp(20px, 2.5vh, 28px);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98), 0 0 15px rgba(3, 4, 10, 0.95); /* Bóng đổ dày để chữ cực kỳ dễ đọc */
+      }
+      .intro-tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: clamp(8px, 0.8vw, 12px);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .intro-tags li {
+        font-family: "Montserrat", sans-serif; /* Montserrat cao cấp sạch lỗi dấu */
+        font-weight: 600;
+        font-size: clamp(11px, 0.9vw, 14px);
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        padding: clamp(6px, 0.6vw, 10px) clamp(10px, 1vw, 16px);
+        border: 1px solid rgba(255, 122, 26, 0.28);
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.88);
+        background: rgba(3, 4, 10, 0.7);
+        transition: all 0.3s ease;
+      }
+      .intro-tags li.tag-soon {
+        border-color: rgba(255, 255, 255, 0.14);
+        color: var(--text-dim);
+      }
+
+      @media (min-width: 1600px) {
+        .intro-title { font-size: 76px; }
+        .intro-desc { font-size: 30px; }
+        .intro-panel { max-width: 560px; }
+      }
+
+      @media (max-width: 900px) {
+        .intro-hero {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto;
+          align-content: start;
+          gap: 20px;
+          padding: 10vh 5vw 42vh;
+        }
+        .intro-col-left,
+        .intro-col-right {
+          grid-column: 1;
+          justify-content: stretch;
+          padding: 0;
+          transform: translateY(16px);
+        }
+        .intro-hero.show .intro-col-left,
+        .intro-hero.show .intro-col-right {
+          transform: translateY(0);
+        }
+        .intro-panel {
+          max-width: 100%;
+          text-align: left;
+        }
+        .intro-panel-left {
+          border: none;
+          background: transparent;
+        }
+        .intro-vignette {
+          background:
+            linear-gradient(to bottom, rgba(3,4,10,0.92) 0%, rgba(3,4,10,0.45) 45%, transparent 58%),
+            linear-gradient(to bottom, transparent 50%, rgba(3,4,10,0.82) 100%);
+        }
+      }
       
       .intro-loader {
         position: absolute;
@@ -151,6 +334,43 @@
         font-size: 15px;
         line-height: 1.65;
         color: var(--text-sub);
+      }
+      .portal-lead {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--text-dim);
+        margin-top: 14px;
+        font-family: "Space Mono", monospace;
+        letter-spacing: 0.04em;
+      }
+      .portal-stats {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 24px;
+        margin-top: 36px;
+        padding-top: 28px;
+        border-top: 1px solid rgba(255, 122, 26, 0.12);
+      }
+      .portal-stat {
+        text-align: center;
+        min-width: 100px;
+      }
+      .portal-stat strong {
+        display: block;
+        font-size: clamp(22px, 3vw, 32px);
+        font-weight: 700;
+        color: var(--neon-orange);
+        line-height: 1;
+        margin-bottom: 6px;
+        text-shadow: 0 0 12px rgba(255, 122, 26, 0.35);
+      }
+      .portal-stat span {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-dim);
       }
 
       /* Portal Timeline Grid Container */
@@ -500,6 +720,44 @@
       .card-semiconductor:hover .card-arrow-link svg { transform: translateX(4px); }
       .card-semiconductor:hover .portal-node { background: var(--neon-semiconductor); box-shadow: 0 0 14px var(--neon-semiconductor); }
 
+      /* DATASCIENCE */
+      .card-datascience .portal-card { border-color: rgba(0, 162, 255, 0.12); }
+      .card-datascience .card-hud-corner { border-color: var(--neon-datascience); }
+      .card-datascience .card-icon-box { color: var(--neon-datascience); background: rgba(0, 162, 255, 0.04); border-color: rgba(0, 162, 255, 0.15); box-shadow: 0 0 10px rgba(0, 162, 255, 0.05); }
+      .card-datascience .card-badge { color: var(--neon-datascience); background: rgba(0, 162, 255, 0.1); border-color: rgba(0, 162, 255, 0.2); }
+      .card-datascience .card-arrow-link { color: var(--neon-datascience); }
+      .card-datascience .portal-node { border-color: var(--neon-datascience); box-shadow: 0 0 8px rgba(0, 162, 255, 0.4); }
+
+      .card-datascience:hover .portal-card {
+        border-color: rgba(0, 162, 255, 0.3);
+        box-shadow: 0 0 30px rgba(0, 162, 255, 0.08);
+        transform: translateY(-4px) scale(1.02);
+        background: rgba(10, 16, 22, 0.72);
+      }
+      .card-datascience:hover .card-hud-corner { opacity: 0.9; width: 14px; height: 14px; }
+      .card-datascience:hover .card-icon-box { background: var(--neon-datascience); color: #03040a; box-shadow: 0 0 14px var(--neon-datascience); }
+      .card-datascience:hover .card-arrow-link svg { transform: translateX(4px); }
+      .card-datascience:hover .portal-node { background: var(--neon-datascience); box-shadow: 0 0 14px var(--neon-datascience); }
+
+      /* DESIGN */
+      .card-design .portal-card { border-color: rgba(255, 0, 127, 0.12); }
+      .card-design .card-hud-corner { border-color: var(--neon-design); }
+      .card-design .card-icon-box { color: var(--neon-design); background: rgba(255, 0, 127, 0.04); border-color: rgba(255, 0, 127, 0.15); box-shadow: 0 0 10px rgba(255, 0, 127, 0.05); }
+      .card-design .card-badge { color: var(--neon-design); background: rgba(255, 0, 127, 0.1); border-color: rgba(255, 0, 127, 0.2); }
+      .card-design .card-arrow-link { color: var(--neon-design); }
+      .card-design .portal-node { border-color: var(--neon-design); box-shadow: 0 0 8px rgba(255, 0, 127, 0.4); }
+
+      .card-design:hover .portal-card {
+        border-color: rgba(255, 0, 127, 0.3);
+        box-shadow: 0 0 30px rgba(255, 0, 127, 0.08);
+        transform: translateY(-4px) scale(1.02);
+        background: rgba(22, 10, 16, 0.72);
+      }
+      .card-design:hover .card-hud-corner { opacity: 0.9; width: 14px; height: 14px; }
+      .card-design:hover .card-icon-box { background: var(--neon-design); color: #03040a; box-shadow: 0 0 14px var(--neon-design); }
+      .card-design:hover .card-arrow-link svg { transform: translateX(4px); }
+      .card-design:hover .portal-node { background: var(--neon-design); box-shadow: 0 0 14px var(--neon-design); }
+
       /* NORMAL CARDS (Coming Soon) */
       .card-normal { cursor: default; }
       .card-normal .portal-card {
@@ -590,22 +848,68 @@
     <div class="intro">
       <div class="intro-loader" id="intro-loader">
         <div class="spinner"></div>
-        <span>INITIALIZING HYPER CORE...</span>
+        <span>ĐANG TẢI KHÔNG GIAN 3D...</span>
       </div>
       <spline-viewer
         id="intro-viewer"
         loading="eager"
-        url="https://prod.spline.design/PJRa9ScE8Vszwb8M/scene.splinecode"
+        url="https://prod.spline.design/ewC1T9Lh0ZWOsRqo/scene.splinecode"
       ></spline-viewer>
-      <div class="scroll-cue" id="scroll-cue">Scroll to Explore</div>
+      <div class="intro-vignette" aria-hidden="true"></div>
+      <div class="intro-hero" id="intro-hero">
+        <div class="intro-col intro-col-left">
+          <div class="intro-panel intro-panel-left">
+            <span class="intro-eyebrow">FPT University · Cổng chuyên ngành CNTT</span>
+            <h1 class="intro-title">Khám phá tương lai công nghệ qua từng chuyên ngành</h1>
+          </div>
+        </div>
+        <div class="intro-col intro-col-right">
+          <div class="intro-panel intro-panel-right">
+            <span class="intro-tags-label">10 chuyên ngành CNTT</span>
+            <ul class="intro-tags" aria-label="Các chuyên ngành">
+              <li>Công nghệ thông tin</li>
+              <li>Robot &amp; AI</li>
+              <li>Kỹ thuật phần mềm</li>
+              <li>Trí tuệ nhân tạo</li>
+              <li>An toàn thông tin</li>
+              <li>Vi mạch bán dẫn</li>
+              <li>Ô tô số</li>
+              <li>Hệ thống thông tin</li>
+              <li class="tag-soon">Khoa học dữ liệu</li>
+              <li class="tag-soon">Đồ họa số</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-cue" id="scroll-cue">Cuộn để khám phá</div>
     </div>
 
     <!-- Interactive Cyber Major Portal -->
     <section class="portal-section" id="portal-area">
       <div class="portal-header">
-        <span class="portal-subtitle">Interactive Cyber Network</span>
+        <span class="portal-subtitle">FPT University · Interactive Cyber Network</span>
         <h1>CỔNG KẾT NỐI CHUYÊN NGÀNH</h1>
-        <p>Hệ sinh thái đào tạo công nghệ hàng đầu đạt tiêu chuẩn chất lượng giáo dục quốc tế. Khám phá không gian thực tế ảo 3D độc bản cho từng định hướng phát triển tương lai.</p>
+        <p>
+          Chọn chuyên ngành phù hợp với đam mê và thế mạnh của bạn. Mỗi lộ trình được thiết kế theo chuẩn nghề nghiệp quốc tế —
+          từ kiến trúc đám mây, học máy sâu, bảo mật mạng đến thiết kế chip silicon và hệ thống nhúng ô tô thông minh.
+        </p>
+        <p class="portal-lead">
+          Nhấn vào từng thẻ bên dưới để vào không gian 3D tương ứng · Các ngành đang mở rộng sẽ sớm kích hoạt
+        </p>
+        <div class="portal-stats">
+          <div class="portal-stat">
+            <strong>8</strong>
+            <span>Không gian 3D</span>
+          </div>
+          <div class="portal-stat">
+            <strong>10</strong>
+            <span>Chuyên ngành</span>
+          </div>
+          <div class="portal-stat">
+            <strong>ACM · ISO</strong>
+            <span>Chuẩn đào tạo</span>
+          </div>
+        </div>
       </div>
 
       <div class="portal-container">
@@ -733,7 +1037,7 @@
         <!-- 05. Khoa học dữ liệu ứng dụng -->
         <div class="portal-row left-align">
           <div class="portal-node"></div>
-          <div class="card-wrapper card-normal">
+          <a href="./datascience.html" class="card-wrapper card-datascience">
             <div class="portal-card">
               <div class="card-hud-corner top-left"></div>
               <div class="card-hud-corner bottom-right"></div>
@@ -744,18 +1048,19 @@
                 </div>
                 <div class="card-title-box">
                   <h3>Khoa học dữ liệu ứng dụng</h3>
-                  <span class="card-badge">Coming Soon</span>
+                  <span class="card-badge">3D Experience</span>
                 </div>
               </div>
               <p>Phân tích mô hình dữ liệu quy mô lớn (Big Data Analytics), khai thác các insights ẩn giấu hỗ trợ đưa ra các quyết định chiến lược doanh nghiệp.</p>
               <div class="card-cta-line">
                 <span class="card-stat">BIG DATA ENGINE</span>
-                <span class="card-arrow-link" style="opacity: 0.3; pointer-events: none;">
-                  Chưa mở
+                <span class="card-arrow-link">
+                  Vào Không Gian 3D
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
 
         <!-- 06. An toàn thông tin -->
@@ -877,7 +1182,7 @@
         <!-- 10. Thiết kế đồ họa và mỹ thuật số -->
         <div class="portal-row right-align">
           <div class="portal-node"></div>
-          <div class="card-wrapper card-normal">
+          <a href="./design.html" class="card-wrapper card-design">
             <div class="portal-card">
               <div class="card-hud-corner top-left"></div>
               <div class="card-hud-corner bottom-right"></div>
@@ -888,18 +1193,19 @@
                 </div>
                 <div class="card-title-box">
                   <h3>Thiết kế đồ họa và mỹ thuật số</h3>
-                  <span class="card-badge">Coming Soon</span>
+                  <span class="card-badge">3D Experience</span>
                 </div>
               </div>
               <p>Sáng tạo truyền thông đa phương tiện nghệ thuật số, thiết kế UX/UI cho sản phẩm công nghệ và định hình thương hiệu hiện đại.</p>
               <div class="card-cta-line">
                 <span class="card-stat">DIGITAL ART & DESIGN</span>
-                <span class="card-arrow-link" style="opacity: 0.3; pointer-events: none;">
-                  Chưa mở
+                <span class="card-arrow-link">
+                  Vào Không Gian 3D
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
 
       </div>
@@ -914,13 +1220,46 @@
     <script>
       const introViewer = document.getElementById('intro-viewer');
       const introLoader = document.getElementById('intro-loader');
+      const introHero   = document.getElementById('intro-hero');
       const scrollCue   = document.getElementById('scroll-cue');
 
-      // Ẩn loader khi mô hình Spline 3D tải xong
-      introViewer.addEventListener('load', hideIntroLoader);
+      // Ẩn loader và logo spline khi tải xong
+      introViewer.addEventListener('load', () => {
+        hideIntroLoader();
+        hideSplineLogo();
+      });
 
       // Fallback Timeout: Ẩn loader sau 4 giây phòng trường hợp lỗi mạng hoặc chạy offline
-      const fallbackTimeout = setTimeout(hideIntroLoader, 4000);
+      const fallbackTimeout = setTimeout(() => {
+        hideIntroLoader();
+        hideSplineLogo();
+      }, 4000);
+
+      function hideSplineLogo() {
+        try {
+          const shadow = introViewer.shadowRoot;
+          if (shadow) {
+            if (!shadow.querySelector('#spline-hide-intro')) {
+              const style = document.createElement('style');
+              style.id = 'spline-hide-intro';
+              style.textContent = `
+                #logo, a[href*="spline"], [class*="logo"], [id*="logo"],
+                div[style*="position: fixed"], div[style*="position:fixed"],
+                a[style*="position: fixed"], a[style*="position:fixed"] { display: none !important; }
+              `;
+              shadow.appendChild(style);
+            }
+          }
+        } catch (e) {
+          console.warn("Hiding intro spline logo failed:", e);
+        }
+      }
+
+      // Vô hiệu hóa logo định kỳ để chắc chắn ẩn sạch
+      setTimeout(hideSplineLogo, 300);
+      setTimeout(hideSplineLogo, 1000);
+      setTimeout(hideSplineLogo, 2000);
+      setTimeout(hideSplineLogo, 4000);
 
       function hideIntroLoader() {
         if (introLoader.style.opacity !== '0') {
@@ -928,6 +1267,7 @@
           introLoader.style.opacity = '0';
           setTimeout(() => introLoader.style.display = 'none', 500);
           scrollCue.classList.add('show');
+          if (introHero) introHero.classList.add('show');
         }
       }
 
@@ -1033,7 +1373,9 @@
             "https://prod.spline.design/VKxTBSIgEO4zdKe8/scene.splinecode", // Security
             "https://prod.spline.design/KvZkPS1S-uMNFh0G/scene.splinecode", // InfoSys
             "https://prod.spline.design/6CWre6Fx6MlPcS9v/scene.splinecode", // Software
-            "https://prod.spline.design/85JDcEdRpQj-jze2/scene.splinecode"  // Semiconductor
+            "https://prod.spline.design/85JDcEdRpQj-jze2/scene.splinecode", // Semiconductor
+            "https://prod.spline.design/mkBqaGCdgzYoUp5N/scene.splinecode", // DataScience
+            "https://prod.spline.design/E9mlCyJZVbRqJ7EE/scene.splinecode"  // Design
           ];
 
           const schedulePreload = window.requestIdleCallback || ((cb) => setTimeout(cb, 1000));
