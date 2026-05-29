@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="https://prod.spline.design/eubA1DkR-mlMa4SF/scene.splinecode" as="fetch" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
@@ -23,7 +23,7 @@
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { scroll-behavior: smooth; }
       body {
-        font-family: "Space Grotesk", system-ui, sans-serif;
+        font-family: "Montserrat", Arial, "Helvetica Neue", Helvetica, sans-serif;
         background: #03040a;
         color: var(--text-car);
         overflow-x: hidden;
@@ -55,17 +55,16 @@
         backdrop-filter: blur(14px);
       }
       .nav-brand-car {
-        font-family: "Space Mono", monospace;
-        font-size: 13px;
+        font-size: 16px;
         font-weight: 700;
         letter-spacing: 0.05em;
       }
       .nav-tag-car {
-        font-size: 10px;
+        font-size: 13px;
         color: var(--neon-car);
-        letter-spacing: 0.14em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        font-weight: 600;
+        font-weight: 700;
       }
 
       /* ── EXPERIENCE CAR ── */
@@ -165,14 +164,14 @@
       .panel-car {
         position: absolute;
         z-index: 10;
-        width: clamp(210px, 22vw, 330px);
+        width: clamp(320px, 27vw, 450px); /* Cỡ panel cân bằng tinh tế */
         opacity: 0;
         will-change: opacity, transform;
-        padding: 20px;
-        background: rgba(3, 4, 10, 0.65);
-        border: 1px solid rgba(239, 68, 68, 0.08);
+        padding: 22px 24px; /* Tăng padding rộng rãi vừa phải */
+        background: rgba(3, 4, 10, 0.86); /* Tăng độ mờ nền để chữ nổi bật rực rỡ */
+        border: 1.5px solid rgba(239, 68, 68, 0.16);
         backdrop-filter: blur(16px);
-        border-radius: 4px;
+        border-radius: 6px;
         transition: border-color 0.4s, box-shadow 0.4s;
       }
       .panel-car.active {
@@ -203,12 +202,12 @@
         box-shadow: 0 0 6px var(--neon-car);
       }
       .hud-sys-status-car {
-        font-family: "Space Mono", monospace;
-        font-size: 8px;
+        font-size: 10px;
+        font-weight: 700;
         color: var(--dim-car);
         position: absolute;
-        top: 6px;
-        right: 12px;
+        top: 8px;
+        right: 14px;
         letter-spacing: 0.05em;
         opacity: 0.6;
       }
@@ -223,16 +222,15 @@
       }
 
       .p-tag-car {
-        font-family: "Space Mono", monospace;
-        font-size: 9.5px;
+        font-size: 12px;
         font-weight: 700;
         color: var(--neon-car);
-        letter-spacing: 0.16em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        margin-bottom: 7px;
+        margin-bottom: 8px;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
       }
       .p-tag-car::before {
         content: '';
@@ -250,31 +248,33 @@
         50% { opacity: 1; box-shadow: 0 0 10px var(--neon-car); }
       }
       .panel-car h2 {
-        font-size: clamp(19px, 1.9vw, 28px);
-        font-weight: 700;
+        font-size: clamp(24px, 2.2vw, 32px); /* Tinh chỉnh cỡ chữ cân bằng */
+        font-weight: 800; /* Rất rõ ràng từ xa */
         color: #fff;
-        line-height: 1.15;
+        line-height: 1.25;
         letter-spacing: -0.015em;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
       }
       .panel-car p {
-        font-size: 13.5px;
-        line-height: 1.74;
-        color: var(--sub-car);
+        font-size: 17.5px; /* Tinh chỉnh cỡ chữ để dễ nhìn */
+        line-height: 1.6;
+        font-weight: 600; /* Dày nét hơn */
+        color: #ffffff; /* Sáng trắng tăng độ tương phản */
       }
       .panel-car ul {
         list-style: none;
-        margin-top: 5px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 10px;
         padding: 0;
       }
       .panel-car li {
-        font-size: 13px;
+        font-size: 16.5px; /* Tinh chỉnh cỡ chữ */
         line-height: 1.5;
-        color: var(--sub-car);
-        padding-left: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        padding-left: 16px;
         position: relative;
       }
       .panel-car li::before {
@@ -282,44 +282,45 @@
         position: absolute;
         left: 0;
         color: var(--neon-car);
-        font-weight: 700;
+        font-weight: 800;
       }
-      .panel-car li strong { color: #e8eef8; font-weight: 600; }
+      .panel-car li strong { color: #ffffff; font-weight: 700; }
 
       /* stats car */
       .stats-car {
         display: flex;
-        gap: 10px;
-        margin-top: 12px;
-        margin-bottom: 10px;
+        gap: 14px;
+        margin-top: 14px;
+        margin-bottom: 12px;
       }
       .stat-car {
         flex: 1;
-        border-top: 1.5px solid var(--neon-car);
-        padding-top: 8px;
+        border-top: 2px solid var(--neon-car);
+        padding-top: 10px;
       }
       .stat-num-car {
-        font-family: "Space Mono", monospace;
-        font-size: 23px;
-        font-weight: 700;
+        font-size: 32px; /* Tinh chỉnh cỡ con số */
+        font-weight: 800;
         color: var(--neon-car);
         line-height: 1;
         letter-spacing: -0.02em;
       }
       .stat-label-car {
-        font-size: 10px;
-        color: var(--dim-car);
-        margin-top: 3px;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.7);
+        margin-top: 4px;
         letter-spacing: 0.03em;
       }
       .salary-car {
-        font-size: 12.5px;
-        color: var(--sub-car);
-        line-height: 1.85;
-        border-top: 1px solid rgba(255,255,255,0.1);
-        padding-top: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.6;
+        border-top: 1px solid rgba(255,255,255,0.15);
+        padding-top: 12px;
       }
-      .salary-car strong { color: #fff; font-weight: 600; }
+      .salary-car strong { color: #ffffff; font-weight: 700; }
 
       /* positions car */
       .tl-car { top: 60px; left: 22px; }
@@ -402,66 +403,66 @@
       /* ── COMPACT STAGE LIST CAR ── */
       .stage-list-car {
         position: relative;
-        padding-left: 20px;
-        margin-top: 8px;
+        padding-left: 24px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
       }
       .stage-list-car::before {
         content: '';
         position: absolute;
-        left: 5px;
-        top: 10px;
-        bottom: 10px;
-        width: 1px;
+        left: 6px;
+        top: 12px;
+        bottom: 12px;
+        width: 2px;
         background: linear-gradient(to bottom, var(--neon-car) 0%, rgba(239,68,68,0.15) 100%);
       }
       .stage-item-car {
         display: grid;
-        grid-template-columns: 30px 1fr auto;
+        grid-template-columns: 32px 1fr auto;
         align-items: center;
-        gap: 6px 8px;
-        padding: 5px 0;
+        gap: 6px 10px;
+        padding: 6px 0;
         position: relative;
       }
       .stage-item-car::before {
         content: '';
         position: absolute;
-        left: -20px;
+        left: -24px;
         top: 50%;
         transform: translateY(-50%);
-        width: 7px;
-        height: 7px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background: #0a0d1c;
-        border: 1px solid rgba(239,68,68,0.4);
+        border: 2px solid rgba(239,68,68,0.4);
       }
       .stage-item-car.active::before {
         background: var(--neon-car);
         border-color: var(--neon-car);
-        box-shadow: 0 0 7px rgba(239,68,68,0.7);
+        box-shadow: 0 0 10px rgba(239,68,68,0.8);
       }
       .si-badge-car {
-        font-family: "Space Mono", monospace;
-        font-size: 9px;
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 800;
         color: var(--neon-car);
         letter-spacing: 0.06em;
       }
       .si-name-car {
-        font-size: 12.5px;
-        color: var(--sub-car);
-        line-height: 1.3;
+        font-size: 15.5px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.35;
       }
-      .stage-item-car.active .si-name-car { color: #fff; font-weight: 600; }
+      .stage-item-car.active .si-name-car { color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(239,68,68,0.3); }
       .si-time-car {
-        font-family: "Space Mono", monospace;
-        font-size: 9px;
-        color: rgba(239,68,68,0.55);
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(239,68,68,0.85);
         white-space: nowrap;
         letter-spacing: 0.03em;
       }
-      .stage-item-car.active .si-time-car { color: rgba(239,68,68,0.85); }
+      .stage-item-car.active .si-time-car { color: rgba(239,68,68,1); }
 
       /* Quay lai button */
       .back-btn-car {
@@ -686,30 +687,31 @@
           <div class="hud-bracket-car bottom-right"></div>
           <div class="hud-sys-status-car">CURR_MAP: V2.6</div>
           <div class="p-tag-car">04 · Lộ trình đào tạo</div>
+          <h2>Lộ trình Học tập</h2>
           <div class="stage-list-car">
             <div class="stage-item-car active">
               <span class="si-badge-car">GĐ1</span>
-              <span class="si-name-car">Chuẩn bị tiếng Anh IELTS 6.0</span>
-              <span class="si-time-car">2T – 1 Năm</span>
+              <span class="si-name-car">Kiến trúc máy tính &amp; Kỹ thuật nhúng nhúng</span>
+              <span class="si-time-car">HK 1–3</span>
             </div>
             <div class="stage-item-car">
               <span class="si-badge-car">GĐ2</span>
-              <span class="si-name-car">Cơ bản &amp; Cơ sở ngành nhúng</span>
-              <span class="si-time-car">HK 1–5</span>
+              <span class="si-name-car">Lập trình nhúng C++ &amp; Giao tiếp mạng ô tô</span>
+              <span class="si-time-car">HK 4–5</span>
             </div>
             <div class="stage-item-car">
               <span class="si-badge-car">GĐ3</span>
-              <span class="si-name-car">Doanh nghiệp thực tế (OJT)</span>
+              <span class="si-name-car">Thực tập OJT tại hãng xe &amp; FPT Automotive</span>
               <span class="si-time-car">HK 6</span>
             </div>
             <div class="stage-item-car">
               <span class="si-badge-car">GĐ4</span>
-              <span class="si-name-car">Chuyên môn sâu (AUTOSAR/ADAS)</span>
+              <span class="si-name-car">Thiết kế Module AUTOSAR &amp; Thử nghiệm ADAS</span>
               <span class="si-time-car">HK 7–8</span>
             </div>
             <div class="stage-item-car">
               <span class="si-badge-car">GĐ5</span>
-              <span class="si-name-car">Hoàn thành &amp; Đồ án khởi nghiệp</span>
+              <span class="si-name-car">Đồ án phần mềm ô tô số hóa (SDV) toàn diện</span>
               <span class="si-time-car">HK 9</span>
             </div>
           </div>
@@ -754,22 +756,17 @@
           const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
           if (desktop && !reduceMotion) {
-            // 1. Hoạt ảnh Intro ban đầu cho các panel góc trên (p1 và p3) để thông tin hiển thị ngay lập tức
-            const introTl = gsap.timeline();
-            introTl.fromTo("#p1-car", 
-              { opacity: 0, x: -30, y: 10, scale: 0.97 },
-              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p1-car").classList.add("active") }
-            )
-            .fromTo("#p3-car", 
-              { opacity: 0, x: 30, y: 10, scale: 0.97 },
-              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p3-car").classList.add("active") },
-              "<+=0.15"
+            // 1. Hoạt ảnh Intro ban đầu chỉ cho duy nhất panel 1 góc trên bên trái (Thông tin chung)
+            gsap.fromTo("#p1-car", 
+              { opacity: 0, x: -35, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.8, ease: "power2.out", onComplete: () => document.querySelector("#p1-car").classList.add("active") }
             );
 
-            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel góc dưới (p2 và p4)
+            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel tiếp theo lần lượt trượt vào khi cuộn xuống
             const scrollItems = [
-              { panel: "#p2-car", offset: 20, startX: -30 },
-              { panel: "#p4-car", offset: 50, startX: 30 },
+              { panel: "#p2-car", offset: 15, startX: -35 },
+              { panel: "#p3-car", offset: 35, startX: 35 },
+              { panel: "#p4-car", offset: 55, startX: 35 },
             ];
 
             scrollItems.forEach(({ panel, offset, startX }) => {
@@ -786,7 +783,7 @@
                   scrollTrigger: {
                     trigger: ".experience-car",
                     start: `top+=${offset}% center`,
-                    end: `top+=${offset + 18}% center`,
+                    end: `top+=${offset + 15}% center`,
                     scrub: 0.8,
                     onEnter: () => pEl.classList.add("active"),
                     onLeave: () => pEl.classList.remove("active"),

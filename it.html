@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="https://prod.spline.design/l-z4rkSuwU9lDO-9/scene.splinecode" as="fetch" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
@@ -23,7 +23,7 @@
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { scroll-behavior: smooth; }
       body {
-        font-family: "Space Grotesk", system-ui, sans-serif;
+        font-family: "Montserrat", Arial, "Helvetica Neue", Helvetica, sans-serif;
         background: #03040a;
         color: var(--text-it);
         overflow-x: hidden;
@@ -55,17 +55,16 @@
         backdrop-filter: blur(14px);
       }
       .nav-brand-it {
-        font-family: "Space Mono", monospace;
-        font-size: 13px;
+        font-size: 16px;
         font-weight: 700;
         letter-spacing: 0.05em;
       }
       .nav-tag-it {
-        font-size: 10px;
+        font-size: 13px;
         color: var(--neon-it);
-        letter-spacing: 0.14em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        font-weight: 600;
+        font-weight: 700;
       }
 
       /* ── EXPERIENCE IT ── */
@@ -165,14 +164,14 @@
       .panel-it {
         position: absolute;
         z-index: 10;
-        width: clamp(210px, 22vw, 330px);
+        width: clamp(320px, 27vw, 450px); /* Cỡ panel cân bằng tinh tế */
         opacity: 0;
         will-change: opacity, transform;
-        padding: 20px;
-        background: rgba(3, 4, 10, 0.65);
-        border: 1px solid rgba(0, 255, 135, 0.08);
+        padding: 22px 24px; /* Tăng padding rộng rãi vừa phải */
+        background: rgba(3, 4, 10, 0.86); /* Tăng độ mờ nền để chữ nổi bật rực rỡ */
+        border: 1.5px solid rgba(0, 255, 135, 0.16);
         backdrop-filter: blur(16px);
-        border-radius: 4px;
+        border-radius: 6px;
         transition: border-color 0.4s, box-shadow 0.4s;
       }
       .panel-it.active {
@@ -203,12 +202,12 @@
         box-shadow: 0 0 6px var(--neon-it);
       }
       .hud-sys-status-it {
-        font-family: "Space Mono", monospace;
-        font-size: 8px;
+        font-size: 10px;
+        font-weight: 700;
         color: var(--dim-it);
         position: absolute;
-        top: 6px;
-        right: 12px;
+        top: 8px;
+        right: 14px;
         letter-spacing: 0.05em;
         opacity: 0.6;
       }
@@ -223,16 +222,15 @@
       }
 
       .p-tag-it {
-        font-family: "Space Mono", monospace;
-        font-size: 9.5px;
+        font-size: 12px;
         font-weight: 700;
         color: var(--neon-it);
-        letter-spacing: 0.16em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        margin-bottom: 7px;
+        margin-bottom: 8px;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
       }
       .p-tag-it::before {
         content: '';
@@ -250,31 +248,33 @@
         50% { opacity: 1; box-shadow: 0 0 10px var(--neon-it); }
       }
       .panel-it h2 {
-        font-size: clamp(19px, 1.9vw, 28px);
-        font-weight: 700;
+        font-size: clamp(24px, 2.2vw, 32px); /* Tinh chỉnh cỡ chữ cân bằng */
+        font-weight: 800; /* Rất rõ ràng từ xa */
         color: #fff;
-        line-height: 1.15;
+        line-height: 1.25;
         letter-spacing: -0.015em;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
       }
       .panel-it p {
-        font-size: 13.5px;
-        line-height: 1.74;
-        color: var(--sub-it);
+        font-size: 17.5px; /* Tinh chỉnh cỡ chữ để dễ nhìn */
+        line-height: 1.6;
+        font-weight: 600; /* Dày nét hơn */
+        color: #ffffff; /* Sáng trắng tăng độ tương phản */
       }
       .panel-it ul {
         list-style: none;
-        margin-top: 5px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 10px;
         padding: 0;
       }
       .panel-it li {
-        font-size: 13px;
+        font-size: 16.5px; /* Tinh chỉnh cỡ chữ */
         line-height: 1.5;
-        color: var(--sub-it);
-        padding-left: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        padding-left: 16px;
         position: relative;
       }
       .panel-it li::before {
@@ -282,44 +282,93 @@
         position: absolute;
         left: 0;
         color: var(--neon-it);
-        font-weight: 700;
+        font-weight: 800;
       }
-      .panel-it li strong { color: #e8eef8; font-weight: 600; }
+      .panel-it li strong { color: #ffffff; font-weight: 700; }
 
       /* stats it */
       .stats-it {
         display: flex;
-        gap: 10px;
-        margin-top: 12px;
-        margin-bottom: 10px;
+        gap: 14px;
+        margin-top: 14px;
+        margin-bottom: 12px;
       }
       .stat-it {
         flex: 1;
-        border-top: 1.5px solid var(--neon-it);
-        padding-top: 8px;
+        border-top: 2px solid var(--neon-it);
+        padding-top: 10px;
       }
       .stat-num-it {
-        font-family: "Space Mono", monospace;
-        font-size: 23px;
-        font-weight: 700;
+        font-size: 32px; /* Tinh chỉnh cỡ con số */
+        font-weight: 800;
         color: var(--neon-it);
         line-height: 1;
         letter-spacing: -0.02em;
       }
       .stat-label-it {
-        font-size: 10px;
-        color: var(--dim-it);
-        margin-top: 3px;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.7);
+        margin-top: 4px;
         letter-spacing: 0.03em;
       }
       .salary-it {
-        font-size: 12.5px;
-        color: var(--sub-it);
-        line-height: 1.85;
-        border-top: 1px solid rgba(255,255,255,0.1);
-        padding-top: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.6;
+        border-top: 1px solid rgba(255,255,255,0.15);
+        padding-top: 12px;
       }
-      .salary-it strong { color: #fff; font-weight: 600; }
+      .salary-it strong { color: #ffffff; font-weight: 700; }
+
+      /* ── TECH STACK STYLES IT ── */
+      .tech-stack-container {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 10px;
+        text-align: left;
+      }
+      .tr-it .tech-stack-container, .br-it .tech-stack-container {
+        text-align: right;
+      }
+      .tech-stack-category {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .category-name {
+        font-family: "Space Mono", monospace;
+        font-size: 10.5px;
+        color: var(--neon-it);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .tech-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .tr-it .tech-badges, .br-it .tech-badges {
+        justify-content: flex-end;
+      }
+      .tech-badge {
+        font-size: 11.5px;
+        font-weight: 600;
+        color: #ffffff;
+        background: rgba(0, 255, 135, 0.06);
+        border: 1px solid rgba(0, 255, 135, 0.25);
+        padding: 4px 10px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+      .tech-badge:hover {
+        background: var(--neon-it);
+        color: #03040a;
+        box-shadow: 0 0 8px var(--neon-it);
+      }
 
       /* positions it */
       .tl-it { top: 60px; left: 22px; }
@@ -402,66 +451,66 @@
       /* ── COMPACT STAGE LIST IT ── */
       .stage-list-it {
         position: relative;
-        padding-left: 20px;
-        margin-top: 8px;
+        padding-left: 24px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
       }
       .stage-list-it::before {
         content: '';
         position: absolute;
-        left: 5px;
-        top: 10px;
-        bottom: 10px;
-        width: 1px;
+        left: 6px;
+        top: 12px;
+        bottom: 12px;
+        width: 2px;
         background: linear-gradient(to bottom, var(--neon-it) 0%, rgba(0,255,135,0.15) 100%);
       }
       .stage-item-it {
         display: grid;
-        grid-template-columns: 30px 1fr auto;
+        grid-template-columns: 32px 1fr auto;
         align-items: center;
-        gap: 6px 8px;
-        padding: 5px 0;
+        gap: 6px 10px;
+        padding: 6px 0;
         position: relative;
       }
       .stage-item-it::before {
         content: '';
         position: absolute;
-        left: -20px;
+        left: -24px;
         top: 50%;
         transform: translateY(-50%);
-        width: 7px;
-        height: 7px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background: #0a0d1c;
-        border: 1px solid rgba(0,255,135,0.4);
+        border: 2px solid rgba(0,255,135,0.4);
       }
       .stage-item-it.active::before {
         background: var(--neon-it);
         border-color: var(--neon-it);
-        box-shadow: 0 0 7px rgba(0,255,135,0.7);
+        box-shadow: 0 0 10px rgba(0,255,135,0.8);
       }
       .si-badge-it {
-        font-family: "Space Mono", monospace;
-        font-size: 9px;
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 800;
         color: var(--neon-it);
         letter-spacing: 0.06em;
       }
       .si-name-it {
-        font-size: 12.5px;
-        color: var(--sub-it);
-        line-height: 1.3;
+        font-size: 15.5px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 1.35;
       }
-      .stage-item-it.active .si-name-it { color: #fff; font-weight: 600; }
+      .stage-item-it.active .si-name-it { color: #fff; font-weight: 800; text-shadow: 0 0 10px rgba(0,255,135,0.3); }
       .si-time-it {
-        font-family: "Space Mono", monospace;
-        font-size: 9px;
-        color: rgba(0,255,135,0.55);
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(0,255,135,0.85);
         white-space: nowrap;
         letter-spacing: 0.03em;
       }
-      .stage-item-it.active .si-time-it { color: rgba(0,255,135,0.85); }
+      .stage-item-it.active .si-time-it { color: rgba(0,255,135,1); }
 
       /* Quay lai button */
       .back-btn-it {
@@ -679,36 +728,37 @@
           </div>
         </div>
 
-        <!-- 04 Lộ trình -->
+        <!-- 04 Lộ trình đào tạo -->
         <div class="panel-it br-it" id="p4-it">
           <div class="hud-bracket-it top-left"></div>
           <div class="hud-bracket-it bottom-right"></div>
-          <div class="hud-sys-status-it">SYS_BUILD: V3.2</div>
+          <div class="hud-sys-status-it">ACM_COMPLIANT: OK</div>
           <div class="p-tag-it">04 · Lộ trình đào tạo</div>
+          <h2>Lộ trình Học tập</h2>
           <div class="stage-list-it">
             <div class="stage-item-it active">
               <span class="si-badge-it">GĐ1</span>
-              <span class="si-name-it">Anh ngữ học thuật IELTS 6.0</span>
-              <span class="si-time-it">2T – 1 Năm</span>
+              <span class="si-name-it">Lập trình nền tảng &amp; Cấu trúc dữ liệu</span>
+              <span class="si-time-it">HK 1–3</span>
             </div>
             <div class="stage-item-it">
               <span class="si-badge-it">GĐ2</span>
-              <span class="si-name-it">Cơ sở CNTT, Lập trình &amp; CSDL</span>
-              <span class="si-time-it">HK 1–5</span>
+              <span class="si-name-it">Phát triển Hệ thống &amp; Cơ sở dữ liệu</span>
+              <span class="si-time-it">HK 4–5</span>
             </div>
             <div class="stage-item-it">
               <span class="si-badge-it">GĐ3</span>
-              <span class="si-name-it">Thực tập doanh nghiệp (OJT)</span>
+              <span class="si-name-it">Thực tập doanh nghiệp (OJT) thực chiến</span>
               <span class="si-time-it">HK 6</span>
             </div>
             <div class="stage-item-it">
               <span class="si-badge-it">GĐ4</span>
-              <span class="si-name-it">Kiến trúc phần mềm &amp; Điện toán đám mây</span>
+              <span class="si-name-it">Điện toán đám mây &amp; DevOps thế hệ mới</span>
               <span class="si-time-it">HK 7–8</span>
             </div>
             <div class="stage-item-it">
               <span class="si-badge-it">GĐ5</span>
-              <span class="si-name-it">Bảo vệ Capstone Project tốt nghiệp</span>
+              <span class="si-name-it">Đồ án tốt nghiệp &amp; Chứng chỉ quốc tế</span>
               <span class="si-time-it">HK 9</span>
             </div>
           </div>
@@ -753,22 +803,17 @@
           const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
           if (desktop && !reduceMotion) {
-            // 1. Hoạt ảnh Intro ban đầu cho các panel góc trên (p1 và p3) để thông tin hiển thị ngay lập tức
-            const introTl = gsap.timeline();
-            introTl.fromTo("#p1-it", 
+            // 1. Hoạt ảnh Intro ban đầu chỉ cho duy nhất panel 1 góc trên bên trái (Thông tin chung)
+            gsap.fromTo("#p1-it", 
               { opacity: 0, x: -35, y: 10, scale: 0.97 },
-              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p1-it").classList.add("active") }
-            )
-            .fromTo("#p3-it", 
-              { opacity: 0, x: 35, y: 10, scale: 0.97 },
-              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p3-it").classList.add("active") },
-              "<+=0.15"
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.8, ease: "power2.out", onComplete: () => document.querySelector("#p1-it").classList.add("active") }
             );
 
-            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel góc dưới (p2 và p4)
+            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel tiếp theo lần lượt trượt vào khi cuộn xuống
             const scrollItems = [
-              { panel: "#p2-it", offset: 20, startX: -35 },
-              { panel: "#p4-it", offset: 50, startX: 35 },
+              { panel: "#p2-it", offset: 15, startX: -35 },
+              { panel: "#p3-it", offset: 35, startX: 35 },
+              { panel: "#p4-it", offset: 55, startX: 35 },
             ];
 
             scrollItems.forEach(({ panel, offset, startX }) => {
@@ -785,7 +830,7 @@
                   scrollTrigger: {
                     trigger: ".experience-it",
                     start: `top+=${offset}% center`,
-                    end: `top+=${offset + 18}% center`,
+                    end: `top+=${offset + 15}% center`,
                     scrub: 0.8,
                     onEnter: () => pEl.classList.add("active"),
                     onLeave: () => pEl.classList.remove("active"),
