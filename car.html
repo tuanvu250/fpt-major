@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Công nghệ Ô tô số — Digital Automotive · FPT University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://prod.spline.design/eubA1DkR-mlMa4SF/scene.splinecode" as="fetch" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
+    <style>
+      :root {
+        --neon-car: #ef4444; /* Red neon matched with the sports car LED color */
+        --text-car: #ffffff;
+        --sub-car: #c8d4e8;
+        --dim-car: rgba(255,255,255,0.5);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background: #03040a;
+        color: var(--text-car);
+        overflow-x: hidden;
+      }
+
+      /* hide spline watermark for car */
+      #car-viewer::part(logo) { display: none !important; }
+      .spline-cover-car {
+        position: absolute;
+        right: 0; bottom: 0;
+        width: 220px; height: 56px;
+        z-index: 8;
+        background: linear-gradient(135deg, transparent 30%, rgba(3,4,10,0.98) 65%);
+        pointer-events: none;
+      }
+
+      /* ── NAV CAR ── */
+      .nav-car {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 50;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        border-bottom: 1px solid rgba(239,68,68,0.2);
+        background: rgba(3,4,10,0.82);
+        backdrop-filter: blur(14px);
+      }
+      .nav-brand-car {
+        font-family: "Space Mono", monospace;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      .nav-tag-car {
+        font-size: 10px;
+        color: var(--neon-car);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      /* ── EXPERIENCE CAR ── */
+      .experience-car { position: relative; min-height: 520vh; }
+      .sticky-stage-car {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      #car-viewer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 0;
+      }
+
+      /* vignette darkens corners so text is readable */
+      .vignette-car {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse 52% 52% at 50% 52%,
+          transparent 30%,
+          rgba(3,5,14,0.72) 100%
+        );
+      }
+
+      /* grid matching index.html */
+      .grid-car {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(239,68,68,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(239,68,68,0.03) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+
+      /* ── SVG RADAR & BLUEPRINT LINES CAR ── */
+      .svg-arrows-car {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        pointer-events: none;
+        overflow: visible;
+      }
+      .tech-line-car {
+        stroke: rgba(239, 68, 68, 0.12);
+        stroke-width: 1px;
+        stroke-dasharray: 4 8;
+      }
+      .radar-ring-car {
+        fill: none;
+        stroke: var(--neon-car);
+        stroke-width: 1.2px;
+        opacity: 0;
+        transform-origin: 720px 560px;
+      }
+      @keyframes radar-pulse-car {
+        0% { transform: scale(0.6); opacity: 0; }
+        15% { opacity: 0.45; }
+        100% { transform: scale(1.3); opacity: 0; }
+      }
+      .radar-ring-car.ring-1 { animation: radar-pulse-car 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; }
+      .radar-ring-car.ring-2 { animation: radar-pulse-car 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 1.5s; }
+      .radar-ring-car.ring-3 { animation: radar-pulse-car 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 3s; }
+      
+      .sensing-dot-car {
+        fill: var(--neon-car);
+        opacity: 0.3;
+        transition: all 0.4s ease;
+      }
+      .sensing-dot-car.active-glow {
+        animation: pulse-dot-car 2s ease-in-out infinite;
+      }
+      @keyframes pulse-dot-car {
+        0%, 100% { opacity: 0.3; r: 3.5; }
+        50% { opacity: 0.8; r: 5.5; fill: #ff6b6b; filter: drop-shadow(0 0 4px var(--neon-car)); }
+      }
+      .sensing-line-car {
+        stroke: rgba(239, 68, 68, 0.4);
+        stroke-width: 1px;
+        stroke-dasharray: 2 3;
+      }
+
+      /* ── PANELS CAR (HUD GLOW & BRACKETS) ── */
+      .panel-car {
+        position: absolute;
+        z-index: 10;
+        width: clamp(210px, 22vw, 330px);
+        opacity: 0;
+        will-change: opacity, transform;
+        padding: 20px;
+        background: rgba(3, 4, 10, 0.65);
+        border: 1px solid rgba(239, 68, 68, 0.08);
+        backdrop-filter: blur(16px);
+        border-radius: 4px;
+        transition: border-color 0.4s, box-shadow 0.4s;
+      }
+      .panel-car.active {
+        border-color: rgba(239, 68, 68, 0.28);
+        box-shadow: 0 0 24px rgba(239, 68, 68, 0.06);
+      }
+      .hud-bracket-car {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border: 1.5px solid var(--neon-car);
+        opacity: 0.4;
+        pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .hud-bracket-car.top-left {
+        top: -2px; left: -2px;
+        border-right: none; border-bottom: none;
+      }
+      .hud-bracket-car.bottom-right {
+        bottom: -2px; right: -2px;
+        border-left: none; border-top: none;
+      }
+      .panel-car.active .hud-bracket-car {
+        opacity: 0.9;
+        width: 22px;
+        height: 22px;
+        box-shadow: 0 0 6px var(--neon-car);
+      }
+      .hud-sys-status-car {
+        font-family: "Space Mono", monospace;
+        font-size: 8px;
+        color: var(--dim-car);
+        position: absolute;
+        top: 6px;
+        right: 12px;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+      }
+      .panel-car.active .hud-sys-status-car {
+        color: var(--neon-car);
+        opacity: 0.9;
+        animation: blink-text-car 1.8s steps(2, start) infinite;
+      }
+      @keyframes blink-text-car {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+
+      .p-tag-car {
+        font-family: "Space Mono", monospace;
+        font-size: 9.5px;
+        font-weight: 700;
+        color: var(--neon-car);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 7px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .p-tag-car::before {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        background: var(--neon-car);
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 6px var(--neon-car);
+        animation: glow-car 1.6s ease-in-out infinite;
+      }
+      @keyframes glow-car {
+        0%,100% { opacity: 0.4; box-shadow: 0 0 4px var(--neon-car); }
+        50% { opacity: 1; box-shadow: 0 0 10px var(--neon-car); }
+      }
+      .panel-car h2 {
+        font-size: clamp(19px, 1.9vw, 28px);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        margin-bottom: 8px;
+      }
+      .panel-car p {
+        font-size: 13.5px;
+        line-height: 1.74;
+        color: var(--sub-car);
+      }
+      .panel-car ul {
+        list-style: none;
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 0;
+      }
+      .panel-car li {
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--sub-car);
+        padding-left: 14px;
+        position: relative;
+      }
+      .panel-car li::before {
+        content: '›';
+        position: absolute;
+        left: 0;
+        color: var(--neon-car);
+        font-weight: 700;
+      }
+      .panel-car li strong { color: #e8eef8; font-weight: 600; }
+
+      /* stats car */
+      .stats-car {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        margin-bottom: 10px;
+      }
+      .stat-car {
+        flex: 1;
+        border-top: 1.5px solid var(--neon-car);
+        padding-top: 8px;
+      }
+      .stat-num-car {
+        font-family: "Space Mono", monospace;
+        font-size: 23px;
+        font-weight: 700;
+        color: var(--neon-car);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .stat-label-car {
+        font-size: 10px;
+        color: var(--dim-car);
+        margin-top: 3px;
+        letter-spacing: 0.03em;
+      }
+      .salary-car {
+        font-size: 12.5px;
+        color: var(--sub-car);
+        line-height: 1.85;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 8px;
+      }
+      .salary-car strong { color: #fff; font-weight: 600; }
+
+      /* positions car */
+      .tl-car { top: 60px; left: 22px; }
+      .bl-car { bottom: 26px; left: 22px; }
+      .tr-car { top: 60px; right: 22px; }
+      .br-car { bottom: 26px; right: 22px; }
+
+      /* right-side panels styling car */
+      .tr-car, .br-car { text-align: right; }
+      .tr-car .p-tag-car, .br-car .p-tag-car { justify-content: flex-end; flex-direction: row-reverse; }
+      .tr-car .panel-car li, .br-car .panel-car li { padding-left: 0; padding-right: 14px; }
+      .tr-car .panel-car li::before, .br-car .panel-car li::before { left: auto; right: 0; }
+      .tr-car .stat-car, .br-car .stat-car { text-align: right; }
+
+      /* scroll hint car */
+      .scroll-hint-car {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 7px;
+        color: rgba(239,68,68,0.5);
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      .scroll-hint-car::after {
+        content: '';
+        width: 1px;
+        height: 32px;
+        background: linear-gradient(to bottom, var(--neon-car), transparent);
+        animation: drop-car 1.8s ease-in-out infinite;
+      }
+      @keyframes drop-car {
+        0%,100% { opacity: 0.2; transform: scaleY(0.4) translateY(-10px); }
+        60% { opacity: 1; transform: scaleY(1) translateY(0); }
+      }
+
+      .footer-car {
+        padding: 24px 20px 48px;
+        text-align: center;
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: rgba(239,68,68,0.3);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* ── MOBILE CAR ── */
+      @media (max-width: 1100px) {
+        .experience-car { min-height: auto; }
+        .sticky-stage-car { position: static; height: 64vh; }
+        #car-viewer { position: relative; height: 64vh; }
+        .panel-car {
+          position: static;
+          width: 100%;
+          opacity: 1 !important;
+          transform: none !important;
+          padding: 14px 16px;
+          border-left: 2px solid var(--neon-car);
+          margin-bottom: 2px;
+          background: rgba(5,7,18,0.9);
+        }
+        .tr-car,.br-car { text-align:left; border-left:2px solid var(--neon-car); }
+        .tr-car .p-tag-car,.br-car .p-tag-car { justify-content:flex-start; flex-direction:row; }
+        .svg-arrows-car,.grid-car,.scroll-hint-car,.vignette-car { display:none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .panel-car { opacity:1!important; transform:none!important; }
+        .p-tag-car::before { animation:none; opacity:1; }
+        .scroll-hint-car { display:none; }
+      }
+
+      /* ── COMPACT STAGE LIST CAR ── */
+      .stage-list-car {
+        position: relative;
+        padding-left: 20px;
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+      }
+      .stage-list-car::before {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        bottom: 10px;
+        width: 1px;
+        background: linear-gradient(to bottom, var(--neon-car) 0%, rgba(239,68,68,0.15) 100%);
+      }
+      .stage-item-car {
+        display: grid;
+        grid-template-columns: 30px 1fr auto;
+        align-items: center;
+        gap: 6px 8px;
+        padding: 5px 0;
+        position: relative;
+      }
+      .stage-item-car::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #0a0d1c;
+        border: 1px solid rgba(239,68,68,0.4);
+      }
+      .stage-item-car.active::before {
+        background: var(--neon-car);
+        border-color: var(--neon-car);
+        box-shadow: 0 0 7px rgba(239,68,68,0.7);
+      }
+      .si-badge-car {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--neon-car);
+        letter-spacing: 0.06em;
+      }
+      .si-name-car {
+        font-size: 12.5px;
+        color: var(--sub-car);
+        line-height: 1.3;
+      }
+      .stage-item-car.active .si-name-car { color: #fff; font-weight: 600; }
+      .si-time-car {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        color: rgba(239,68,68,0.55);
+        white-space: nowrap;
+        letter-spacing: 0.03em;
+      }
+      .stage-item-car.active .si-time-car { color: rgba(239,68,68,0.85); }
+
+      /* Quay lai button */
+      .back-btn-car {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        color: var(--neon-car);
+        font-family: 'Space Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        border: 1px solid rgba(239,68,68,0.3);
+        padding: 4px 12px;
+        border-radius: 4px;
+        background: rgba(239,68,68,0.03);
+        transition: all 0.3s ease;
+      }
+      .back-btn-car:hover {
+        background: var(--neon-car);
+        color: #03040a;
+        box-shadow: 0 0 12px var(--neon-car);
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="nav-car">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="./index.html" class="back-btn-car">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Quay lại
+        </a>
+        <span class="nav-brand-car">FPT · AUTOMOTIVE</span>
+      </div>
+      <span class="nav-tag-car">Công nghệ Ô tô số · AUTOSAR · EV/ADAS</span>
+    </nav>
+
+    <section class="experience-car">
+      <div class="sticky-stage-car">
+
+        <spline-viewer id="car-viewer" loading="eager" unload-sound="true" muted="true" url="https://prod.spline.design/eubA1DkR-mlMa4SF/scene.splinecode"></spline-viewer>
+        <div class="spline-cover-car" aria-hidden="true"></div>
+        <div class="grid-car" aria-hidden="true"></div>
+        <div class="vignette-car" aria-hidden="true"></div>
+
+        <!-- SVG RADAR ADAS SCAN & BLUEPRINT TECH LINES (Bản nâng cấp ADAS Radar cao cấp nhất) -->
+        <svg class="svg-arrows-car" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+          <!-- Hướng quét ngang và dọc (Blueprint CAD) -->
+          <line class="tech-line-car" x1="50" y1="560" x2="1390" y2="560" />
+          <line class="tech-line-car" x1="720" y1="50" x2="720" y2="850" />
+
+          <!-- Vòng quét ADAS gầm xe dạng Elip đồng tâm lan tỏa -->
+          <g class="radar-scan-car">
+            <ellipse class="radar-ring-car ring-1" cx="720" cy="560" rx="180" ry="54" />
+            <ellipse class="radar-ring-car ring-2" cx="720" cy="560" rx="280" ry="84" />
+            <ellipse class="radar-ring-car ring-3" cx="720" cy="560" rx="380" ry="114" />
+          </g>
+
+          <!-- Các chấm tròn quét điểm thông số (Sensing Reticles) siêu mảnh quanh thân xe -->
+          <circle class="sensing-dot-car active-glow" cx="660" cy="460" r="4" />
+          <line class="sensing-line-car" x1="660" y1="460" x2="660" y2="440" />
+          
+          <circle class="sensing-dot-car active-glow" cx="500" cy="520" r="4" />
+          <line class="sensing-line-car" x1="500" y1="520" x2="500" y2="540" />
+
+          <circle class="sensing-dot-car active-glow" cx="820" cy="450" r="4" />
+          <line class="sensing-line-car" x1="820" y1="450" x2="820" y2="430" />
+
+          <circle class="sensing-dot-car active-glow" cx="920" cy="500" r="4" />
+          <line class="sensing-line-car" x1="920" y1="500" x2="920" y2="520" />
+        </svg>
+
+        <!-- 01 Tổng quan -->
+        <div class="panel-car tl-car" id="p1-car">
+          <div class="hud-bracket-car top-left"></div>
+          <div class="hud-bracket-car bottom-right"></div>
+          <div class="hud-sys-status-car">SYS_OK // ADAS_INIT</div>
+          <div class="p-tag-car">01 · Chuyên ngành</div>
+          <h2>Công nghệ Ô tô số</h2>
+          <p>Kỹ sư phần mềm ô tô tiên phong trong kỷ nguyên Software-Driven Vehicle. Kết hợp Kỹ thuật ô tô truyền thống cùng Điện tử nhúng, IoT và Trí tuệ nhân tạo (AI).</p>
+        </div>
+
+        <!-- 02 Điểm nổi bật -->
+        <div class="panel-car bl-car" id="p2-car">
+          <div class="hud-bracket-car top-left"></div>
+          <div class="hud-bracket-car bottom-right"></div>
+          <div class="hud-sys-status-car">OJT_TRACK: 100%</div>
+          <div class="p-tag-car">02 · Điểm khác biệt</div>
+          <h2>Đặc điểm nổi bật</h2>
+          <ul>
+            <li><strong>Chuẩn AQAS</strong> — Kiểm định chất lượng giáo dục đại học Châu Âu.</li>
+            <li><strong>FPT Automotive</strong> — Giáo trình kế thừa R&amp;D từ doanh nghiệp đầu ngành.</li>
+            <li><strong>Lab tối tân</strong> — Ohm Lab &amp; Embedded Lab thực chiến sớm từ năm 2.</li>
+            <li><strong>OJT thực chiến</strong> — Kỳ thực tập 6-8 tháng tại Bosch, VinFast, Hitachi...</li>
+          </ul>
+        </div>
+
+        <!-- 03 Trụ cột -->
+        <div class="panel-car tr-car" id="p3-car">
+          <div class="hud-bracket-car top-left"></div>
+          <div class="hud-bracket-car bottom-right"></div>
+          <div class="hud-sys-status-car">CORE_PILOT: ON</div>
+          <div class="p-tag-car">03 · Trụ cột cốt lõi</div>
+          <h2>3 Hướng Chuyên Sâu</h2>
+          <div class="stats-car">
+            <div class="stat-car">
+              <div class="stat-num-car">AUTOSAR</div>
+              <div class="stat-label-car">Kiến trúc trên MaaZ</div>
+            </div>
+            <div class="stat-car">
+              <div class="stat-num-car">EV/ADAS</div>
+              <div class="stat-label-car">Xe điện &amp; Tự hành AI</div>
+            </div>
+          </div>
+          <div class="salary-car">
+            <strong>Infotainment</strong> &nbsp;·&nbsp; Phát triển hệ thống thông tin giải trí và kết nối thông minh thế hệ mới trên ô tô.
+          </div>
+        </div>
+
+        <!-- 04 Lộ trình -->
+        <div class="panel-car br-car" id="p4-car">
+          <div class="hud-bracket-car top-left"></div>
+          <div class="hud-bracket-car bottom-right"></div>
+          <div class="hud-sys-status-car">CURR_MAP: V2.6</div>
+          <div class="p-tag-car">04 · Lộ trình đào tạo</div>
+          <div class="stage-list-car">
+            <div class="stage-item-car active">
+              <span class="si-badge-car">GĐ1</span>
+              <span class="si-name-car">Chuẩn bị tiếng Anh IELTS 6.0</span>
+              <span class="si-time-car">2T – 1 Năm</span>
+            </div>
+            <div class="stage-item-car">
+              <span class="si-badge-car">GĐ2</span>
+              <span class="si-name-car">Cơ bản &amp; Cơ sở ngành nhúng</span>
+              <span class="si-time-car">HK 1–5</span>
+            </div>
+            <div class="stage-item-car">
+              <span class="si-badge-car">GĐ3</span>
+              <span class="si-name-car">Doanh nghiệp thực tế (OJT)</span>
+              <span class="si-time-car">HK 6</span>
+            </div>
+            <div class="stage-item-car">
+              <span class="si-badge-car">GĐ4</span>
+              <span class="si-name-car">Chuyên môn sâu (AUTOSAR/ADAS)</span>
+              <span class="si-time-car">HK 7–8</span>
+            </div>
+            <div class="stage-item-car">
+              <span class="si-badge-car">GĐ5</span>
+              <span class="si-name-car">Hoàn thành &amp; Đồ án khởi nghiệp</span>
+              <span class="si-time-car">HK 9</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-hint-car" aria-hidden="true">Scroll</div>
+      </div>
+    </section>
+
+    <footer class="footer-car">FPT University · Công nghệ Ô tô số · 2026</footer>
+
+    <script>
+      // The script will execute once loaded dynamically inside index.html or standalone
+      (function() {
+        // Tắt tiếng triệt để (Audio Killer) bằng cách vô hiệu hóa hoàn toàn AudioContext của trình duyệt
+        try {
+          const OriginalAudioContext = window.AudioContext || window.webkitAudioContext;
+          if (OriginalAudioContext) {
+            const ProxyAudioContext = function(...args) {
+              const context = new OriginalAudioContext(...args);
+              context.suspend();
+              context.resume = () => Promise.resolve();
+              return context;
+            };
+            window.AudioContext = ProxyAudioContext;
+            if (window.webkitAudioContext) window.webkitAudioContext = ProxyAudioContext;
+          }
+        } catch (e) {
+          console.warn("Mute AudioContext failed:", e);
+        }
+
+        // Safe check to wait for GSAP
+        const initCarAnimations = () => {
+          if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+            setTimeout(initCarAnimations, 50);
+            return;
+          }
+
+          gsap.registerPlugin(ScrollTrigger);
+
+          const desktop = window.matchMedia("(min-width: 1101px)").matches;
+          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          if (desktop && !reduceMotion) {
+            // 1. Hoạt ảnh Intro ban đầu cho các panel góc trên (p1 và p3) để thông tin hiển thị ngay lập tức
+            const introTl = gsap.timeline();
+            introTl.fromTo("#p1-car", 
+              { opacity: 0, x: -30, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p1-car").classList.add("active") }
+            )
+            .fromTo("#p3-car", 
+              { opacity: 0, x: 30, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p3-car").classList.add("active") },
+              "<+=0.15"
+            );
+
+            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel góc dưới (p2 và p4)
+            const scrollItems = [
+              { panel: "#p2-car", offset: 20, startX: -30 },
+              { panel: "#p4-car", offset: 50, startX: 30 },
+            ];
+
+            scrollItems.forEach(({ panel, offset, startX }) => {
+              const pEl = document.querySelector(panel);
+              if (!pEl) return;
+
+              gsap.fromTo(panel,
+                { opacity: 0, x: startX, y: 10, scale: 0.97 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  scale: 1,
+                  scrollTrigger: {
+                    trigger: ".experience-car",
+                    start: `top+=${offset}% center`,
+                    end: `top+=${offset + 18}% center`,
+                    scrub: 0.8,
+                    onEnter: () => pEl.classList.add("active"),
+                    onLeave: () => pEl.classList.remove("active"),
+                    onEnterBack: () => pEl.classList.add("active"),
+                    onLeaveBack: () => pEl.classList.remove("active"),
+                  }
+                }
+              );
+            });
+
+            gsap.to(".scroll-hint-car", {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: ".experience-car",
+                start: "top+4% top",
+                end: "top+9% top",
+                scrub: true,
+              },
+            });
+          }
+        };
+
+        initCarAnimations();
+
+        // Inject style into shadow DOM of car-viewer to hide watermark
+        const viewer = document.getElementById("car-viewer");
+        if (viewer) {
+          const hideWatermark = () => {
+            try {
+              const shadow = viewer.shadowRoot;
+              if (!shadow) return;
+              if (!shadow.querySelector("#spline-hide-car")) {
+                const style = document.createElement("style");
+                style.id = "spline-hide-car";
+                style.textContent = `
+                  #logo, a[href*="spline"], [class*="logo"], [id*="logo"],
+                  div[style*="position: fixed"], div[style*="position:fixed"] { display: none !important; }
+                `;
+                shadow.appendChild(style);
+              }
+            } catch (_) {}
+          };
+          viewer.addEventListener("load", () => {
+            hideWatermark();
+            setTimeout(hideWatermark, 300);
+            setTimeout(hideWatermark, 800);
+          });
+          setTimeout(hideWatermark, 1000);
+          setTimeout(hideWatermark, 2000);
+        }
+      })();
+    </script>
+  </body>
+</html>

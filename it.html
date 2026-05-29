@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Công nghệ thông tin — Information Technology · FPT University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://prod.spline.design/l-z4rkSuwU9lDO-9/scene.splinecode" as="fetch" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
+    <style>
+      :root {
+        --neon-it: #00ff87; /* Emerald Matrix Green representing coding, system and software engineering */
+        --text-it: #ffffff;
+        --sub-it: #c8d4e8;
+        --dim-it: rgba(255,255,255,0.5);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background: #03040a;
+        color: var(--text-it);
+        overflow-x: hidden;
+      }
+
+      /* hide spline watermark for IT */
+      #it-viewer::part(logo) { display: none !important; }
+      .spline-cover-it {
+        position: absolute;
+        right: 0; bottom: 0;
+        width: 220px; height: 56px;
+        z-index: 8;
+        background: linear-gradient(135deg, transparent 30%, rgba(3,4,10,0.98) 65%);
+        pointer-events: none;
+      }
+
+      /* ── NAV IT ── */
+      .nav-it {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 50;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        border-bottom: 1px solid rgba(0,255,135,0.2);
+        background: rgba(3,4,10,0.82);
+        backdrop-filter: blur(14px);
+      }
+      .nav-brand-it {
+        font-family: "Space Mono", monospace;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      .nav-tag-it {
+        font-size: 10px;
+        color: var(--neon-it);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      /* ── EXPERIENCE IT ── */
+      .experience-it { position: relative; min-height: 520vh; }
+      .sticky-stage-it {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      #it-viewer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 0;
+      }
+
+      /* vignette darkens corners so text is readable */
+      .vignette-it {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse 52% 52% at 50% 52%,
+          transparent 30%,
+          rgba(3,5,14,0.72) 100%
+        );
+      }
+
+      /* grid matching index.html */
+      .grid-it {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0,255,135,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,135,0.03) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+
+      /* ── SVG ARROWS IT ── */
+      .svg-arrows-it {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        pointer-events: none;
+        overflow: visible;
+      }
+      .tech-line-it {
+        stroke: rgba(0, 255, 135, 0.08);
+        stroke-width: 1px;
+        stroke-dasharray: 4 8;
+      }
+      .radar-ring-it {
+        fill: none;
+        stroke: var(--neon-it);
+        stroke-width: 1.2px;
+        opacity: 0;
+        transform-origin: 720px 620px;
+      }
+      @keyframes radar-pulse-it {
+        0% { transform: scale(0.6); opacity: 0; }
+        15% { opacity: 0.45; }
+        100% { transform: scale(1.3); opacity: 0; }
+      }
+      .radar-ring-it.ring-1 { animation: radar-pulse-it 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; }
+      .radar-ring-it.ring-2 { animation: radar-pulse-it 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 1.5s; }
+      .radar-ring-it.ring-3 { animation: radar-pulse-it 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 3s; }
+
+      .sensing-dot-it {
+        fill: var(--neon-it);
+        opacity: 0.3;
+        transition: all 0.4s ease;
+      }
+      .sensing-dot-it.active-glow {
+        animation: pulse-dot-it 2s ease-in-out infinite;
+      }
+      @keyframes pulse-dot-it {
+        0%, 100% { opacity: 0.3; r: 3.5; }
+        50% { opacity: 0.8; r: 5.5; fill: #ffffff; filter: drop-shadow(0 0 4px var(--neon-it)); }
+      }
+      .sensing-line-it {
+        stroke: rgba(0, 255, 135, 0.4);
+        stroke-width: 1px;
+        stroke-dasharray: 2 3;
+      }
+
+      /* ── PANELS IT (HUD GLOW & BRACKETS) ── */
+      .panel-it {
+        position: absolute;
+        z-index: 10;
+        width: clamp(210px, 22vw, 330px);
+        opacity: 0;
+        will-change: opacity, transform;
+        padding: 20px;
+        background: rgba(3, 4, 10, 0.65);
+        border: 1px solid rgba(0, 255, 135, 0.08);
+        backdrop-filter: blur(16px);
+        border-radius: 4px;
+        transition: border-color 0.4s, box-shadow 0.4s;
+      }
+      .panel-it.active {
+        border-color: rgba(0, 255, 135, 0.28);
+        box-shadow: 0 0 24px rgba(0, 255, 135, 0.06);
+      }
+      .hud-bracket-it {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border: 1.5px solid var(--neon-it);
+        opacity: 0.4;
+        pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .hud-bracket-it.top-left {
+        top: -2px; left: -2px;
+        border-right: none; border-bottom: none;
+      }
+      .hud-bracket-it.bottom-right {
+        bottom: -2px; right: -2px;
+        border-left: none; border-top: none;
+      }
+      .panel-it.active .hud-bracket-it {
+        opacity: 0.9;
+        width: 22px;
+        height: 22px;
+        box-shadow: 0 0 6px var(--neon-it);
+      }
+      .hud-sys-status-it {
+        font-family: "Space Mono", monospace;
+        font-size: 8px;
+        color: var(--dim-it);
+        position: absolute;
+        top: 6px;
+        right: 12px;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+      }
+      .panel-it.active .hud-sys-status-it {
+        color: var(--neon-it);
+        opacity: 0.9;
+        animation: blink-text-it 1.8s steps(2, start) infinite;
+      }
+      @keyframes blink-text-it {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+
+      .p-tag-it {
+        font-family: "Space Mono", monospace;
+        font-size: 9.5px;
+        font-weight: 700;
+        color: var(--neon-it);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 7px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .p-tag-it::before {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        background: var(--neon-it);
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 6px var(--neon-it);
+        animation: glow-it 1.6s ease-in-out infinite;
+      }
+      @keyframes glow-it {
+        0%,100% { opacity: 0.4; box-shadow: 0 0 4px var(--neon-it); }
+        50% { opacity: 1; box-shadow: 0 0 10px var(--neon-it); }
+      }
+      .panel-it h2 {
+        font-size: clamp(19px, 1.9vw, 28px);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        margin-bottom: 8px;
+      }
+      .panel-it p {
+        font-size: 13.5px;
+        line-height: 1.74;
+        color: var(--sub-it);
+      }
+      .panel-it ul {
+        list-style: none;
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 0;
+      }
+      .panel-it li {
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--sub-it);
+        padding-left: 14px;
+        position: relative;
+      }
+      .panel-it li::before {
+        content: '›';
+        position: absolute;
+        left: 0;
+        color: var(--neon-it);
+        font-weight: 700;
+      }
+      .panel-it li strong { color: #e8eef8; font-weight: 600; }
+
+      /* stats it */
+      .stats-it {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        margin-bottom: 10px;
+      }
+      .stat-it {
+        flex: 1;
+        border-top: 1.5px solid var(--neon-it);
+        padding-top: 8px;
+      }
+      .stat-num-it {
+        font-family: "Space Mono", monospace;
+        font-size: 23px;
+        font-weight: 700;
+        color: var(--neon-it);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .stat-label-it {
+        font-size: 10px;
+        color: var(--dim-it);
+        margin-top: 3px;
+        letter-spacing: 0.03em;
+      }
+      .salary-it {
+        font-size: 12.5px;
+        color: var(--sub-it);
+        line-height: 1.85;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 8px;
+      }
+      .salary-it strong { color: #fff; font-weight: 600; }
+
+      /* positions it */
+      .tl-it { top: 60px; left: 22px; }
+      .bl-it { bottom: 26px; left: 22px; }
+      .tr-it { top: 60px; right: 22px; }
+      .br-it { bottom: 26px; right: 22px; }
+
+      /* right-side panels styling it */
+      .tr-it, .br-it { text-align: right; }
+      .tr-it .p-tag-it, .br-it .p-tag-it { justify-content: flex-end; flex-direction: row-reverse; }
+      .tr-it .panel-it li, .br-it .panel-it li { padding-left: 0; padding-right: 14px; }
+      .tr-it .panel-it li::before, .br-it .panel-it li::before { left: auto; right: 0; }
+      .tr-it .stat-it, .br-it .stat-it { text-align: right; }
+
+      /* scroll hint it */
+      .scroll-hint-it {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 7px;
+        color: rgba(0,255,135,0.5);
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      .scroll-hint-it::after {
+        content: '';
+        width: 1px;
+        height: 32px;
+        background: linear-gradient(to bottom, var(--neon-it), transparent);
+        animation: drop-it 1.8s ease-in-out infinite;
+      }
+      @keyframes drop-it {
+        0%,100% { opacity: 0.2; transform: scaleY(0.4) translateY(-10px); }
+        60% { opacity: 1; transform: scaleY(1) translateY(0); }
+      }
+
+      .footer-it {
+        padding: 24px 20px 48px;
+        text-align: center;
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: rgba(0,255,135,0.3);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* ── MOBILE IT ── */
+      @media (max-width: 1100px) {
+        .experience-it { min-height: auto; }
+        .sticky-stage-it { position: static; height: 64vh; }
+        #it-viewer { position: relative; height: 64vh; }
+        .panel-it {
+          position: static;
+          width: 100%;
+          opacity: 1 !important;
+          transform: none !important;
+          padding: 14px 16px;
+          border-left: 2px solid var(--neon-it);
+          margin-bottom: 2px;
+          background: rgba(5,7,18,0.9);
+        }
+        .tr-it,.br-it { text-align:left; border-left:2px solid var(--neon-it); }
+        .tr-it .p-tag-it,.br-it .p-tag-it { justify-content:flex-start; flex-direction:row; }
+        .svg-arrows-it,.grid-it,.scroll-hint-it,.vignette-it { display:none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .panel-it { opacity:1!important; transform:none!important; }
+        .p-tag-it::before { animation:none; opacity:1; }
+        .scroll-hint-it { display:none; }
+      }
+
+      /* ── COMPACT STAGE LIST IT ── */
+      .stage-list-it {
+        position: relative;
+        padding-left: 20px;
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+      }
+      .stage-list-it::before {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        bottom: 10px;
+        width: 1px;
+        background: linear-gradient(to bottom, var(--neon-it) 0%, rgba(0,255,135,0.15) 100%);
+      }
+      .stage-item-it {
+        display: grid;
+        grid-template-columns: 30px 1fr auto;
+        align-items: center;
+        gap: 6px 8px;
+        padding: 5px 0;
+        position: relative;
+      }
+      .stage-item-it::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #0a0d1c;
+        border: 1px solid rgba(0,255,135,0.4);
+      }
+      .stage-item-it.active::before {
+        background: var(--neon-it);
+        border-color: var(--neon-it);
+        box-shadow: 0 0 7px rgba(0,255,135,0.7);
+      }
+      .si-badge-it {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--neon-it);
+        letter-spacing: 0.06em;
+      }
+      .si-name-it {
+        font-size: 12.5px;
+        color: var(--sub-it);
+        line-height: 1.3;
+      }
+      .stage-item-it.active .si-name-it { color: #fff; font-weight: 600; }
+      .si-time-it {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        color: rgba(0,255,135,0.55);
+        white-space: nowrap;
+        letter-spacing: 0.03em;
+      }
+      .stage-item-it.active .si-time-it { color: rgba(0,255,135,0.85); }
+
+      /* Quay lai button */
+      .back-btn-it {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        color: var(--neon-it);
+        font-family: 'Space Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        border: 1px solid rgba(0,255,135,0.3);
+        padding: 4px 12px;
+        border-radius: 4px;
+        background: rgba(0,255,135,0.03);
+        transition: all 0.3s ease;
+      }
+      .back-btn-it:hover {
+        background: var(--neon-it);
+        color: #03040a;
+        box-shadow: 0 0 12px var(--neon-it);
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="nav-it">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="./index.html" class="back-btn-it">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Quay lại
+        </a>
+        <span class="nav-brand-it">FPT · INFORMATION TECHNOLOGY</span>
+      </div>
+      <span class="nav-tag-it">Công nghệ thông tin · Kỹ nghệ phần mềm · ACM standard</span>
+    </nav>
+
+    <section class="experience-it">
+      <div class="sticky-stage-it">
+
+        <spline-viewer id="it-viewer" loading="eager" unload-sound="true" muted="true" url="https://prod.spline.design/l-z4rkSuwU9lDO-9/scene.splinecode"></spline-viewer>
+        <div class="spline-cover-it" aria-hidden="true"></div>
+        <div class="grid-it" aria-hidden="true"></div>
+        <div class="vignette-it" aria-hidden="true"></div>
+
+        <!-- SVG ARROWS IT (Matrix Data Connectors và Blueprint Grid) -->
+        <svg class="svg-arrows-it" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+          <!-- Nền lưới Blueprint CAD mảnh -->
+          <line class="tech-line-it" x1="50" y1="480" x2="1390" y2="480" />
+          <line class="tech-line-it" x1="720" y1="50" x2="720" y2="850" />
+
+          <!-- Vòng quét Matrix elip gầm thiết bị lan tỏa -->
+          <g class="radar-scan-it">
+            <ellipse class="radar-ring-it ring-1" cx="720" cy="620" rx="160" ry="48" />
+            <ellipse class="radar-ring-it ring-2" cx="720" cy="620" rx="260" ry="78" />
+            <ellipse class="radar-ring-it ring-3" cx="720" cy="620" rx="360" ry="108" />
+          </g>
+
+          <!-- Các chấm tròn quét điểm thông số (Sensing Reticles) siêu mảnh quanh thân máy -->
+          <circle class="sensing-dot-it active-glow" cx="660" cy="460" r="4" />
+          <line class="sensing-line-it" x1="660" y1="460" x2="660" y2="440" />
+          
+          <circle class="sensing-dot-it active-glow" cx="540" cy="520" r="4" />
+          <line class="sensing-line-it" x1="540" y1="520" x2="540" y2="540" />
+
+          <circle class="sensing-dot-it active-glow" cx="800" cy="480" r="4" />
+          <line class="sensing-line-it" x1="800" y1="480" x2="800" y2="460" />
+
+          <circle class="sensing-dot-it active-glow" cx="880" cy="530" r="4" />
+          <line class="sensing-line-it" x1="880" y1="530" x2="880" y2="550" />
+        </svg>
+
+        <!-- 01 Tổng quan -->
+        <div class="panel-it tl-it" id="p1-it">
+          <div class="hud-bracket-it top-left"></div>
+          <div class="hud-bracket-it bottom-right"></div>
+          <div class="hud-sys-status-it">IT_CORE: ONLINE</div>
+          <div class="p-tag-it">01 · Chuyên ngành</div>
+          <h2>Công nghệ thông tin</h2>
+          <p>Trọng tâm kỹ nghệ số toàn cầu. Đào tạo chiều sâu khoa học máy tính, kỹ nghệ phần mềm chất lượng cao, quản lý dự án công nghệ, kiến trúc hệ thống và điện toán đám mây thế hệ mới.</p>
+        </div>
+
+        <!-- 02 Điểm nổi bật -->
+        <div class="panel-it bl-it" id="p2-it">
+          <div class="hud-bracket-it top-left"></div>
+          <div class="hud-bracket-it bottom-right"></div>
+          <div class="hud-sys-status-it">COMPILER_ST: OK</div>
+          <div class="p-tag-it">02 · Điểm khác biệt</div>
+          <h2>Đặc điểm nổi bật</h2>
+          <ul>
+            <li><strong>Chuẩn ACM Mỹ</strong> — Khung chương trình đào tạo CNTT chuẩn hóa quốc tế hàng đầu thế giới.</li>
+            <li><strong>100% Anh ngữ</strong> — Giáo trình và tài liệu nhập khẩu trực tiếp từ các nhà xuất bản hàng đầu của Mỹ.</li>
+            <li><strong>OJT Thực Chiến</strong> — Học kỳ thực tập thực tế tại hơn 300 đối tác chiến lược lớn của Tập đoàn FPT kỳ 6.</li>
+            <li><strong>Đại học toàn cầu</strong> — Hỗ trợ tối đa chuyển tiếp du học và làm việc định cư nước ngoài.</li>
+          </ul>
+        </div>
+
+        <!-- 03 Cơ hội nghề nghiệp -->
+        <div class="panel-it tr-it" id="p3-it">
+          <div class="hud-bracket-it top-left"></div>
+          <div class="hud-bracket-it bottom-right"></div>
+          <div class="hud-sys-status-it">GLOBAL_DEPLOY: OK</div>
+          <div class="p-tag-it">03 · Cơ hội nghề nghiệp</div>
+          <h2>Thị trường &amp; Mức lương</h2>
+          <div class="stats-it">
+            <div class="stat-it">
+              <div class="stat-num-it">15-25M</div>
+              <div class="stat-label-it">Khởi điểm (Fresher)</div>
+            </div>
+            <div class="stat-it">
+              <div class="stat-num-it">80M+</div>
+              <div class="stat-label-it">Quản lý / Chuyên gia / tháng</div>
+            </div>
+          </div>
+          <div class="salary-it">
+            Kỹ sư phần mềm CNTT luôn nằm trong top các ngành **có nhu cầu nhân lực bền vững nhất** và tốc độ tăng trưởng thu nhập nhanh nhất.
+          </div>
+        </div>
+
+        <!-- 04 Lộ trình -->
+        <div class="panel-it br-it" id="p4-it">
+          <div class="hud-bracket-it top-left"></div>
+          <div class="hud-bracket-it bottom-right"></div>
+          <div class="hud-sys-status-it">SYS_BUILD: V3.2</div>
+          <div class="p-tag-it">04 · Lộ trình đào tạo</div>
+          <div class="stage-list-it">
+            <div class="stage-item-it active">
+              <span class="si-badge-it">GĐ1</span>
+              <span class="si-name-it">Anh ngữ học thuật IELTS 6.0</span>
+              <span class="si-time-it">2T – 1 Năm</span>
+            </div>
+            <div class="stage-item-it">
+              <span class="si-badge-it">GĐ2</span>
+              <span class="si-name-it">Cơ sở CNTT, Lập trình &amp; CSDL</span>
+              <span class="si-time-it">HK 1–5</span>
+            </div>
+            <div class="stage-item-it">
+              <span class="si-badge-it">GĐ3</span>
+              <span class="si-name-it">Thực tập doanh nghiệp (OJT)</span>
+              <span class="si-time-it">HK 6</span>
+            </div>
+            <div class="stage-item-it">
+              <span class="si-badge-it">GĐ4</span>
+              <span class="si-name-it">Kiến trúc phần mềm &amp; Điện toán đám mây</span>
+              <span class="si-time-it">HK 7–8</span>
+            </div>
+            <div class="stage-item-it">
+              <span class="si-badge-it">GĐ5</span>
+              <span class="si-name-it">Bảo vệ Capstone Project tốt nghiệp</span>
+              <span class="si-time-it">HK 9</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-hint-it" aria-hidden="true">Scroll</div>
+      </div>
+    </section>
+
+    <footer class="footer-it">FPT University · Công nghệ thông tin · 2026</footer>
+
+    <script>
+      // The script will execute once loaded dynamically inside index.html or standalone
+      (function() {
+        // Tắt tiếng triệt để (Audio Killer) bằng cách vô hiệu hóa hoàn toàn AudioContext của trình duyệt
+        try {
+          const OriginalAudioContext = window.AudioContext || window.webkitAudioContext;
+          if (OriginalAudioContext) {
+            const ProxyAudioContext = function(...args) {
+              const context = new OriginalAudioContext(...args);
+              context.suspend();
+              context.resume = () => Promise.resolve();
+              return context;
+            };
+            window.AudioContext = ProxyAudioContext;
+            if (window.webkitAudioContext) window.webkitAudioContext = ProxyAudioContext;
+          }
+        } catch (e) {
+          console.warn("Mute AudioContext failed:", e);
+        }
+
+        // Safe check to wait for GSAP
+        const initItAnimations = () => {
+          if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+            setTimeout(initItAnimations, 50);
+            return;
+          }
+
+          gsap.registerPlugin(ScrollTrigger);
+
+          const desktop = window.matchMedia("(min-width: 1101px)").matches;
+          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          if (desktop && !reduceMotion) {
+            // 1. Hoạt ảnh Intro ban đầu cho các panel góc trên (p1 và p3) để thông tin hiển thị ngay lập tức
+            const introTl = gsap.timeline();
+            introTl.fromTo("#p1-it", 
+              { opacity: 0, x: -35, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p1-it").classList.add("active") }
+            )
+            .fromTo("#p3-it", 
+              { opacity: 0, x: 35, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p3-it").classList.add("active") },
+              "<+=0.15"
+            );
+
+            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel góc dưới (p2 và p4)
+            const scrollItems = [
+              { panel: "#p2-it", offset: 20, startX: -35 },
+              { panel: "#p4-it", offset: 50, startX: 35 },
+            ];
+
+            scrollItems.forEach(({ panel, offset, startX }) => {
+              const pEl = document.querySelector(panel);
+              if (!pEl) return;
+
+              gsap.fromTo(panel,
+                { opacity: 0, x: startX, y: 10, scale: 0.97 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  scale: 1,
+                  scrollTrigger: {
+                    trigger: ".experience-it",
+                    start: `top+=${offset}% center`,
+                    end: `top+=${offset + 18}% center`,
+                    scrub: 0.8,
+                    onEnter: () => pEl.classList.add("active"),
+                    onLeave: () => pEl.classList.remove("active"),
+                    onEnterBack: () => pEl.classList.add("active"),
+                    onLeaveBack: () => pEl.classList.remove("active"),
+                  }
+                }
+              );
+            });
+
+            gsap.to(".scroll-hint-it", {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: ".experience-it",
+                start: "top+4% top",
+                end: "top+9% top",
+                scrub: true,
+              },
+            });
+          }
+        };
+
+        initItAnimations();
+
+        // Inject style into shadow DOM of it-viewer to hide watermark
+        const viewer = document.getElementById("it-viewer");
+        if (viewer) {
+          const hideWatermark = () => {
+            try {
+              const shadow = viewer.shadowRoot;
+              if (!shadow) return;
+              if (!shadow.querySelector("#spline-hide-it")) {
+                const style = document.createElement("style");
+                style.id = "spline-hide-it";
+                style.textContent = `
+                  #logo, a[href*="spline"], [class*="logo"], [id*="logo"],
+                  div[style*="position: fixed"], div[style*="position:fixed"] { display: none !important; }
+                `;
+                shadow.appendChild(style);
+              }
+            } catch (_) {}
+          };
+          viewer.addEventListener("load", () => {
+            hideWatermark();
+            
+            // Programmatically hide built-in floating lines, pointers, and dots in the Spline scene
+            try {
+              const splineApp = viewer.spline;
+              if (splineApp && splineApp.scene) {
+                splineApp.scene.traverse((obj) => {
+                  const name = obj.name ? obj.name.toLowerCase() : "";
+                  if (
+                    name.includes("pointer") || 
+                    name.includes("line") || 
+                    name.includes("dot") || 
+                    name.includes("circle") || 
+                    name.includes("arrow") || 
+                    name.includes("target") || 
+                    name.includes("glow") ||
+                    name.includes("bracket") ||
+                    name.includes("connector") ||
+                    name.includes("link") ||
+                    name.includes("ui") ||
+                    name.includes("panel")
+                  ) {
+                    if (!name.includes("screen") && !name.includes("computer") && !name.includes("body") && !name.includes("keyboard") && !name.includes("mouse") && !name.includes("desk") && !name.includes("table")) {
+                      obj.visible = false;
+                    }
+                  }
+                });
+              }
+            } catch (e) {
+              console.warn("Hiding built-in 3D lines failed:", e);
+            }
+            
+            setTimeout(hideWatermark, 300);
+            setTimeout(hideWatermark, 800);
+          });
+          setTimeout(hideWatermark, 1000);
+          setTimeout(hideWatermark, 2000);
+        }
+      })();
+    </script>
+  </body>
+</html>

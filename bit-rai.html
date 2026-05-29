@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BIT_RAI — Robot & AI · FPT University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://prod.spline.design/e4D1T6fh6czHZWtu/scene.splinecode" as="fetch" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@splinetool/viewer@1.12.95/build/spline-viewer.js"></script>
+    <style>
+      :root {
+        --neon-bitrai: #ff7a1a; /* Orange neon of FPT & Robot AI */
+        --text-bitrai: #ffffff;
+        --sub-bitrai: #c8d4e8;
+        --dim-bitrai: rgba(255,255,255,0.5);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background: #03040a;
+        color: var(--text-bitrai);
+        overflow-x: hidden;
+      }
+
+      /* hide spline watermark for BIT_RAI */
+      #bitrai-viewer::part(logo) { display: none !important; }
+      .spline-cover-bitrai {
+        position: absolute;
+        right: 0; bottom: 0;
+        width: 220px; height: 56px;
+        z-index: 8;
+        background: linear-gradient(135deg, transparent 30%, rgba(3,4,10,0.98) 65%);
+        pointer-events: none;
+      }
+
+      /* ── NAV BIT_RAI ── */
+      .nav-bitrai {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 50;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        border-bottom: 1px solid rgba(255,122,26,0.2);
+        background: rgba(3,4,10,0.82);
+        backdrop-filter: blur(14px);
+      }
+      .nav-brand-bitrai {
+        font-family: "Space Mono", monospace;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      .nav-tag-bitrai {
+        font-size: 10px;
+        color: var(--neon-bitrai);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      /* ── EXPERIENCE BIT_RAI ── */
+      .experience-bitrai { position: relative; min-height: 520vh; }
+      .sticky-stage-bitrai {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      #bitrai-viewer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        z-index: 0;
+      }
+
+      /* vignette darkens corners so text is readable */
+      .vignette-bitrai {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse 52% 52% at 50% 52%,
+          transparent 30%,
+          rgba(3,5,14,0.72) 100%
+        );
+      }
+
+      /* grid matching index.html */
+      .grid-bitrai {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255,122,26,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,122,26,0.04) 1px, transparent 1px);
+        background-size: 56px 56px;
+      }
+
+      /* ── SVG ARROWS BIT_RAI ── */
+      .svg-arrows-bitrai {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        pointer-events: none;
+        overflow: visible;
+      }
+      .tech-line-bitrai {
+        stroke: rgba(255, 122, 26, 0.08);
+        stroke-width: 1px;
+        stroke-dasharray: 4 8;
+      }
+      .radar-ring-bitrai {
+        fill: none;
+        stroke: var(--neon-bitrai);
+        stroke-width: 1.2px;
+        opacity: 0;
+        transform-origin: 720px 580px;
+      }
+      @keyframes radar-pulse-bitrai {
+        0% { transform: scale(0.6); opacity: 0; }
+        15% { opacity: 0.45; }
+        100% { transform: scale(1.3); opacity: 0; }
+      }
+      .radar-ring-bitrai.ring-1 { animation: radar-pulse-bitrai 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; }
+      .radar-ring-bitrai.ring-2 { animation: radar-pulse-bitrai 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 1.5s; }
+      .radar-ring-bitrai.ring-3 { animation: radar-pulse-bitrai 4.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 3s; }
+
+      .sensing-dot-bitrai {
+        fill: var(--neon-bitrai);
+        opacity: 0.3;
+        transition: all 0.4s ease;
+      }
+      .sensing-dot-bitrai.active-glow {
+        animation: pulse-dot-bitrai 2s ease-in-out infinite;
+      }
+      @keyframes pulse-dot-bitrai {
+        0%, 100% { opacity: 0.3; r: 3.5; }
+        50% { opacity: 0.8; r: 5.5; fill: #ffffff; filter: drop-shadow(0 0 4px var(--neon-bitrai)); }
+      }
+      .sensing-line-bitrai {
+        stroke: rgba(255, 122, 26, 0.4);
+        stroke-width: 1px;
+        stroke-dasharray: 2 3;
+      }
+
+      /* ── PANELS BIT_RAI (HUD GLOW & BRACKETS) ── */
+      .panel-bitrai {
+        position: absolute;
+        z-index: 10;
+        width: clamp(210px, 22vw, 330px);
+        opacity: 0;
+        will-change: opacity, transform;
+        padding: 20px;
+        background: rgba(3, 4, 10, 0.65);
+        border: 1px solid rgba(255, 122, 26, 0.08);
+        backdrop-filter: blur(16px);
+        border-radius: 4px;
+        transition: border-color 0.4s, box-shadow 0.4s;
+      }
+      .panel-bitrai.active {
+        border-color: rgba(255, 122, 26, 0.28);
+        box-shadow: 0 0 24px rgba(255, 122, 26, 0.06);
+      }
+      .hud-bracket-bitrai {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border: 1.5px solid var(--neon-bitrai);
+        opacity: 0.4;
+        pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .hud-bracket-bitrai.top-left {
+        top: -2px; left: -2px;
+        border-right: none; border-bottom: none;
+      }
+      .hud-bracket-bitrai.bottom-right {
+        bottom: -2px; right: -2px;
+        border-left: none; border-top: none;
+      }
+      .panel-bitrai.active .hud-bracket-bitrai {
+        opacity: 0.9;
+        width: 22px;
+        height: 22px;
+        box-shadow: 0 0 6px var(--neon-bitrai);
+      }
+      .hud-sys-status-bitrai {
+        font-family: "Space Mono", monospace;
+        font-size: 8px;
+        color: var(--dim-bitrai);
+        position: absolute;
+        top: 6px;
+        right: 12px;
+        letter-spacing: 0.05em;
+        opacity: 0.6;
+      }
+      .panel-bitrai.active .hud-sys-status-bitrai {
+        color: var(--neon-bitrai);
+        opacity: 0.9;
+        animation: blink-text-bitrai 1.8s steps(2, start) infinite;
+      }
+      @keyframes blink-text-bitrai {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+
+      .p-tag-bitrai {
+        font-family: "Space Mono", monospace;
+        font-size: 9.5px;
+        font-weight: 700;
+        color: var(--neon-bitrai);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 7px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .p-tag-bitrai::before {
+        content: '';
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        background: var(--neon-bitrai);
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 6px var(--neon-bitrai);
+        animation: glow-bitrai 1.6s ease-in-out infinite;
+      }
+      @keyframes glow-bitrai {
+        0%,100% { opacity: 0.4; box-shadow: 0 0 4px var(--neon-bitrai); }
+        50% { opacity: 1; box-shadow: 0 0 10px var(--neon-bitrai); }
+      }
+      .panel-bitrai h2 {
+        font-size: clamp(19px, 1.9vw, 28px);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        margin-bottom: 8px;
+      }
+      .panel-bitrai p {
+        font-size: 13.5px;
+        line-height: 1.74;
+        color: var(--sub-bitrai);
+      }
+      .panel-bitrai ul {
+        list-style: none;
+        margin-top: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 0;
+      }
+      .panel-bitrai li {
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--sub-bitrai);
+        padding-left: 14px;
+        position: relative;
+      }
+      .panel-bitrai li::before {
+        content: '›';
+        position: absolute;
+        left: 0;
+        color: var(--neon-bitrai);
+        font-weight: 700;
+      }
+      .panel-bitrai li strong { color: #e8eef8; font-weight: 600; }
+
+      /* stats bitrai */
+      .stats-bitrai {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        margin-bottom: 10px;
+      }
+      .stat-bitrai {
+        flex: 1;
+        border-top: 1.5px solid var(--neon-bitrai);
+        padding-top: 8px;
+      }
+      .stat-num-bitrai {
+        font-family: "Space Mono", monospace;
+        font-size: 23px;
+        font-weight: 700;
+        color: var(--neon-bitrai);
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+      .stat-label-bitrai {
+        font-size: 10px;
+        color: var(--dim-bitrai);
+        margin-top: 3px;
+        letter-spacing: 0.03em;
+      }
+      .salary-bitrai {
+        font-size: 12.5px;
+        color: var(--sub-bitrai);
+        line-height: 1.85;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 8px;
+      }
+      .salary-bitrai strong { color: #fff; font-weight: 600; }
+
+      /* positions bitrai */
+      .tl-bitrai { top: 60px; left: 22px; }
+      .bl-bitrai { bottom: 26px; left: 22px; }
+      .tr-bitrai { top: 60px; right: 22px; }
+      .br-bitrai { bottom: 26px; right: 22px; }
+
+      /* right-side panels styling bitrai */
+      .tr-bitrai, .br-bitrai { text-align: right; }
+      .tr-bitrai .p-tag-bitrai, .br-bitrai .p-tag-bitrai { justify-content: flex-end; flex-direction: row-reverse; }
+      .tr-bitrai .panel-bitrai li, .br-bitrai .panel-bitrai li { padding-left: 0; padding-right: 14px; }
+      .tr-bitrai .panel-bitrai li::before, .br-bitrai .panel-bitrai li::before { left: auto; right: 0; }
+      .tr-bitrai .stat-bitrai, .br-bitrai .stat-bitrai { text-align: right; }
+
+      /* scroll hint bitrai */
+      .scroll-hint-bitrai {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 7px;
+        color: rgba(255,122,26,0.5);
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      .scroll-hint-bitrai::after {
+        content: '';
+        width: 1px;
+        height: 32px;
+        background: linear-gradient(to bottom, var(--neon-bitrai), transparent);
+        animation: drop-bitrai 1.8s ease-in-out infinite;
+      }
+      @keyframes drop-bitrai {
+        0%,100% { opacity: 0.2; transform: scaleY(0.4) translateY(-10px); }
+        60% { opacity: 1; transform: scaleY(1) translateY(0); }
+      }
+
+      .footer-bitrai {
+        padding: 24px 20px 48px;
+        text-align: center;
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        color: rgba(255,122,26,0.3);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* ── MOBILE BIT_RAI ── */
+      @media (max-width: 1100px) {
+        .experience-bitrai { min-height: auto; }
+        .sticky-stage-bitrai { position: static; height: 64vh; }
+        #bitrai-viewer { position: relative; height: 64vh; }
+        .panel-bitrai {
+          position: static;
+          width: 100%;
+          opacity: 1 !important;
+          transform: none !important;
+          padding: 14px 16px;
+          border-left: 2px solid var(--neon-bitrai);
+          margin-bottom: 2px;
+          background: rgba(5,7,18,0.9);
+        }
+        .tr-bitrai,.br-bitrai { text-align:left; border-left:2px solid var(--neon-bitrai); }
+        .tr-bitrai .p-tag-bitrai,.br-bitrai .p-tag-bitrai { justify-content:flex-start; flex-direction:row; }
+        .svg-arrows-bitrai,.grid-bitrai,.scroll-hint-bitrai,.vignette-bitrai { display:none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .panel-bitrai { opacity:1!important; transform:none!important; }
+        .p-tag-bitrai::before { animation:none; opacity:1; }
+        .scroll-hint-bitrai { display:none; }
+      }
+
+      /* ── COMPACT STAGE LIST BIT_RAI ── */
+      .stage-list-bitrai {
+        position: relative;
+        padding-left: 20px;
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+      }
+      .stage-list-bitrai::before {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        bottom: 10px;
+        width: 1px;
+        background: linear-gradient(to bottom, var(--neon-bitrai) 0%, rgba(255,122,26,0.15) 100%);
+      }
+      .stage-item-bitrai {
+        display: grid;
+        grid-template-columns: 30px 1fr auto;
+        align-items: center;
+        gap: 6px 8px;
+        padding: 5px 0;
+        position: relative;
+      }
+      .stage-item-bitrai::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #0a0d1c;
+        border: 1px solid rgba(255,122,26,0.4);
+      }
+      .stage-item-bitrai.active::before {
+        background: var(--neon-bitrai);
+        border-color: var(--neon-bitrai);
+        box-shadow: 0 0 7px rgba(255,122,26,0.7);
+      }
+      .si-badge-bitrai {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--neon-bitrai);
+        letter-spacing: 0.06em;
+      }
+      .si-name-bitrai {
+        font-size: 12.5px;
+        color: var(--sub-bitrai);
+        line-height: 1.3;
+      }
+      .stage-item-bitrai.active .si-name-bitrai { color: #fff; font-weight: 600; }
+      .si-time-bitrai {
+        font-family: "Space Mono", monospace;
+        font-size: 9px;
+        color: rgba(255,122,26,0.55);
+        white-space: nowrap;
+        letter-spacing: 0.03em;
+      }
+      .stage-item-bitrai.active .si-time-bitrai { color: rgba(255,122,26,0.85); }
+
+      /* Quay lai button */
+      .back-btn-bitrai {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        color: var(--neon-bitrai);
+        font-family: 'Space Mono', monospace;
+        font-size: 11px;
+        font-weight: 700;
+        border: 1px solid rgba(255,122,26,0.3);
+        padding: 4px 12px;
+        border-radius: 4px;
+        background: rgba(255,122,26,0.03);
+        transition: all 0.3s ease;
+      }
+      .back-btn-bitrai:hover {
+        background: var(--neon-bitrai);
+        color: #03040a;
+        box-shadow: 0 0 12px var(--neon-bitrai);
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="nav-bitrai">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="./index.html" class="back-btn-bitrai">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Quay lại
+        </a>
+        <span class="nav-brand-bitrai">FPT · BIT_RAI</span>
+      </div>
+      <span class="nav-tag-bitrai">Robot &amp; AI · UAV · Humanoid</span>
+    </nav>
+
+    <section class="experience-bitrai">
+      <div class="sticky-stage-bitrai">
+
+        <spline-viewer id="bitrai-viewer" loading="eager" unload-sound="true" muted="true" url="https://prod.spline.design/e4D1T6fh6czHZWtu/scene.splinecode"></spline-viewer>
+        <div class="spline-cover-bitrai" aria-hidden="true"></div>
+        <div class="grid-bitrai" aria-hidden="true"></div>
+        <div class="vignette-bitrai" aria-hidden="true"></div>
+
+        <!-- SVG RADAR SCAN & BLUEPRINT TECH LINES (Bản nâng cấp Robot ADAS Radar cao cấp nhất) -->
+        <svg class="svg-arrows-bitrai" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+          <!-- Hướng quét ngang và dọc (Blueprint CAD) -->
+          <line class="tech-line-bitrai" x1="50" y1="580" x2="1390" y2="580" />
+          <line class="tech-line-bitrai" x1="720" y1="50" x2="720" y2="850" />
+
+          <!-- Vòng quét Robot gầm thiết bị dạng Elip đồng tâm lan tỏa -->
+          <g class="radar-scan-bitrai">
+            <ellipse class="radar-ring-bitrai ring-1" cx="720" cy="580" rx="170" ry="51" />
+            <ellipse class="radar-ring-bitrai ring-2" cx="720" cy="580" rx="270" ry="81" />
+            <ellipse class="radar-ring-bitrai ring-3" cx="720" cy="580" rx="370" ry="111" />
+          </g>
+
+          <!-- Các chấm tròn quét điểm thông số (Sensing Reticles) siêu mảnh quanh Robot -->
+          <circle class="sensing-dot-bitrai active-glow" cx="640" cy="480" r="4" />
+          <line class="sensing-line-bitrai" x1="640" y1="480" x2="640" y2="460" />
+          
+          <circle class="sensing-dot-bitrai active-glow" cx="520" cy="540" r="4" />
+          <line class="sensing-line-bitrai" x1="520" y1="540" x2="520" y2="560" />
+
+          <circle class="sensing-dot-bitrai active-glow" cx="800" cy="470" r="4" />
+          <line class="sensing-line-bitrai" x1="800" y1="470" x2="800" y2="450" />
+
+          <circle class="sensing-dot-bitrai active-glow" cx="900" cy="520" r="4" />
+          <line class="sensing-line-bitrai" x1="900" y1="520" x2="900" y2="540" />
+        </svg>
+
+        <!-- 01 Tổng quan -->
+        <div class="panel-bitrai tl-bitrai" id="p1-bitrai">
+          <div class="hud-bracket-bitrai top-left"></div>
+          <div class="hud-bracket-bitrai bottom-right"></div>
+          <div class="hud-sys-status-bitrai">BOT_CORE: ACTIVE</div>
+          <div class="p-tag-bitrai">01 · Chương trình</div>
+          <h2>BIT_RAI</h2>
+          <p>Cử nhân CNTT chuyên ngành Robot &amp; Trí tuệ nhân tạo — định hướng UAV và Humanoid. Bộ não AI là trọng tâm, không chỉ là cơ khí.</p>
+        </div>
+
+        <!-- 02 Điểm nổi bật -->
+        <div class="panel-bitrai bl-bitrai" id="p2-bitrai">
+          <div class="hud-bracket-bitrai top-left"></div>
+          <div class="hud-bracket-bitrai bottom-right"></div>
+          <div class="hud-sys-status-bitrai">UAV_SENSORS: OK</div>
+          <div class="p-tag-bitrai">02 · Điểm khác biệt</div>
+          <h2>Đặc điểm nổi bật</h2>
+          <ul>
+            <li><strong>AI-First</strong> — thuật toán chiếm 70–80% giá trị sản phẩm</li>
+            <li><strong>Thực chiến</strong> — dự án từ FPT Automotive, UAV, FPT.AI</li>
+            <li><strong>Đa nhiệm</strong> — UAV · Humanoid · Xe tự hành · Arm Robot</li>
+            <li><strong>OJT kỳ 6</strong> — vào doanh nghiệp từ năm 3</li>
+          </ul>
+        </div>
+
+        <!-- 03 Cơ hội -->
+        <div class="panel-bitrai tr-bitrai" id="p3-bitrai">
+          <div class="hud-bracket-bitrai top-left"></div>
+          <div class="hud-bracket-bitrai bottom-right"></div>
+          <div class="hud-sys-status-bitrai">M_TEMP: 34°C</div>
+          <div class="p-tag-bitrai">03 · Cơ hội nghề nghiệp</div>
+          <h2>Thị trường &amp; Mức lương</h2>
+          <div class="stats-bitrai">
+            <div class="stat-bitrai">
+              <div class="stat-num-bitrai">$461M</div>
+              <div class="stat-label-bitrai">Robotics VN năm 2034</div>
+            </div>
+            <div class="stat-bitrai">
+              <div class="stat-num-bitrai">+67%</div>
+              <div class="stat-label-bitrai">Nhu cầu AI/Robot 2024</div>
+            </div>
+          </div>
+          <div class="salary-bitrai">
+            Fresher <strong>18–30M</strong> &nbsp;·&nbsp;
+            Mid <strong>50–85M</strong> &nbsp;·&nbsp;
+            Senior <strong>125M+</strong> / tháng
+          </div>
+        </div>
+
+        <!-- 04 Lộ trình -->
+        <div class="panel-bitrai br-bitrai" id="p4-bitrai">
+          <div class="hud-bracket-bitrai top-left"></div>
+          <div class="hud-bracket-bitrai bottom-right"></div>
+          <div class="hud-sys-status-bitrai">SYS_OK // AUTO_PILOT</div>
+          <div class="p-tag-bitrai">04 · Lộ trình đào tạo</div>
+          <div class="stage-list-bitrai">
+            <div class="stage-item-bitrai active">
+              <span class="si-badge-bitrai">GĐ1</span>
+              <span class="si-name-bitrai">Chuẩn bị tiếng Anh IELTS 6.0</span>
+              <span class="si-time-bitrai">2T – 1 Năm</span>
+            </div>
+            <div class="stage-item-bitrai">
+              <span class="si-badge-bitrai">GĐ2</span>
+              <span class="si-name-bitrai">Cơ sở nền tảng &amp; ngành</span>
+              <span class="si-time-bitrai">HK 1–5</span>
+            </div>
+            <div class="stage-item-bitrai">
+              <span class="si-badge-bitrai">GĐ3</span>
+              <span class="si-name-bitrai">Doanh nghiệp (OJT)</span>
+              <span class="si-time-bitrai">HK 6</span>
+            </div>
+            <div class="stage-item-bitrai">
+              <span class="si-badge-bitrai">GĐ4</span>
+              <span class="si-name-bitrai">Chuyên sâu nâng cao</span>
+              <span class="si-time-bitrai">HK 7–8</span>
+            </div>
+            <div class="stage-item-bitrai">
+              <span class="si-badge-bitrai">GĐ5</span>
+              <span class="si-name-bitrai">Hoàn thành &amp; tốt nghiệp</span>
+              <span class="si-time-bitrai">HK 9</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-hint-bitrai" aria-hidden="true">Scroll</div>
+      </div>
+    </section>
+
+    <footer class="footer-bitrai">FPT University · BIT_RAI · 2026</footer>
+
+    <script>
+      // The script will execute once loaded dynamically inside index.html or standalone
+      (function() {
+        // Tắt tiếng triệt để (Audio Killer) bằng cách vô hiệu hóa hoàn toàn AudioContext của trình duyệt
+        try {
+          const OriginalAudioContext = window.AudioContext || window.webkitAudioContext;
+          if (OriginalAudioContext) {
+            const ProxyAudioContext = function(...args) {
+              const context = new OriginalAudioContext(...args);
+              context.suspend();
+              context.resume = () => Promise.resolve();
+              return context;
+            };
+            window.AudioContext = ProxyAudioContext;
+            if (window.webkitAudioContext) window.webkitAudioContext = ProxyAudioContext;
+          }
+        } catch (e) {
+          console.warn("Mute AudioContext failed:", e);
+        }
+
+        // Safe check to wait for GSAP
+        const initBitRaiAnimations = () => {
+          if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+            setTimeout(initBitRaiAnimations, 50);
+            return;
+          }
+
+          gsap.registerPlugin(ScrollTrigger);
+
+          const desktop = window.matchMedia("(min-width: 1101px)").matches;
+          const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          if (desktop && !reduceMotion) {
+            // 1. Hoạt ảnh Intro ban đầu cho các panel góc trên (p1 và p3) để thông tin hiển thị ngay lập tức
+            const introTl = gsap.timeline();
+            introTl.fromTo("#p1-bitrai", 
+              { opacity: 0, x: -35, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p1-bitrai").classList.add("active") }
+            )
+            .fromTo("#p3-bitrai", 
+              { opacity: 0, x: 35, y: 10, scale: 0.97 },
+              { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.6, ease: "power2.out", onComplete: () => document.querySelector("#p3-bitrai").classList.add("active") },
+              "<+=0.15"
+            );
+
+            // 2. Hoạt ảnh cuộn ScrollTrigger cho các panel góc dưới (p2 và p4)
+            const scrollItems = [
+              { panel: "#p2-bitrai", offset: 20, startX: -35 },
+              { panel: "#p4-bitrai", offset: 50, startX: 35 },
+            ];
+
+            scrollItems.forEach(({ panel, offset, startX }) => {
+              const pEl = document.querySelector(panel);
+              if (!pEl) return;
+
+              gsap.fromTo(panel,
+                { opacity: 0, x: startX, y: 10, scale: 0.97 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  scale: 1,
+                  scrollTrigger: {
+                    trigger: ".experience-bitrai",
+                    start: `top+=${offset}% center`,
+                    end: `top+=${offset + 18}% center`,
+                    scrub: 0.8,
+                    onEnter: () => pEl.classList.add("active"),
+                    onLeave: () => pEl.classList.remove("active"),
+                    onEnterBack: () => pEl.classList.add("active"),
+                    onLeaveBack: () => pEl.classList.remove("active"),
+                  }
+                }
+              );
+            });
+
+            gsap.to(".scroll-hint-bitrai", {
+              opacity: 0,
+              scrollTrigger: {
+                trigger: ".experience-bitrai",
+                start: "top+4% top",
+                end: "top+9% top",
+                scrub: true,
+              },
+            });
+          }
+        };
+
+        initBitRaiAnimations();
+
+        // Inject style into shadow DOM to hide Spline watermark
+        const viewer = document.getElementById("bitrai-viewer");
+        if (viewer) {
+          const hideWatermark = () => {
+            try {
+              const shadow = viewer.shadowRoot;
+              if (!shadow) return;
+              if (!shadow.querySelector("#spline-hide-bitrai")) {
+                const style = document.createElement("style");
+                style.id = "spline-hide-bitrai";
+                style.textContent = `
+                  #logo, a[href*="spline"], [class*="logo"], [id*="logo"],
+                  div[style*="position: fixed"], div[style*="position:fixed"] { display: none !important; }
+                `;
+                shadow.appendChild(style);
+              }
+            } catch (_) {}
+          };
+          viewer.addEventListener("load", () => {
+            hideWatermark();
+            
+            // Programmatically hide built-in floating lines, pointers, and dots in the Spline scene
+            try {
+              const splineApp = viewer.spline;
+              if (splineApp && splineApp.scene) {
+                splineApp.scene.traverse((obj) => {
+                  const name = obj.name ? obj.name.toLowerCase() : "";
+                  if (
+                    name.includes("pointer") || 
+                    name.includes("line") || 
+                    name.includes("dot") || 
+                    name.includes("circle") || 
+                    name.includes("arrow") || 
+                    name.includes("target") || 
+                    name.includes("glow") ||
+                    name.includes("bracket") ||
+                    name.includes("connector") ||
+                    name.includes("link") ||
+                    name.includes("ui") ||
+                    name.includes("panel")
+                  ) {
+                    if (!name.includes("screen") && !name.includes("computer") && !name.includes("body") && !name.includes("keyboard") && !name.includes("mouse") && !name.includes("desk") && !name.includes("table")) {
+                      obj.visible = false;
+                    }
+                  }
+                });
+              }
+            } catch (e) {
+              console.warn("Hiding built-in 3D lines failed:", e);
+            }
+            
+            setTimeout(hideWatermark, 300);
+            setTimeout(hideWatermark, 800);
+          });
+          setTimeout(hideWatermark, 1000);
+          setTimeout(hideWatermark, 2000);
+        }
+      })();
+    </script>
+  </body>
+</html>
