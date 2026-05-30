@@ -50,6 +50,7 @@
         height: 100%;
         display: block;
         pointer-events: none;
+        z-index: 4;
       }
       #intro-viewer::part(logo) { display: none !important; }
 
@@ -60,172 +61,268 @@
         pointer-events: none;
         background:
           linear-gradient(to right,
-            rgba(3,4,10,0.9) 0%,
-            rgba(3,4,10,0.55) 18%,
-            transparent 36%,
-            transparent 64%,
-            rgba(3,4,10,0.55) 82%,
-            rgba(3,4,10,0.9) 100%),
-          linear-gradient(to bottom, rgba(3,4,10,0.5) 0%, transparent 20%, transparent 78%, rgba(3,4,10,0.72) 100%);
+            rgba(3,4,10,0.35) 0%,
+            transparent 22%,
+            transparent 78%,
+            rgba(3,4,10,0.35) 100%),
+          linear-gradient(to bottom, rgba(3,4,10,0.45) 0%, transparent 22%, transparent 76%, rgba(3,4,10,0.6) 100%);
       }
 
-      /* Hai cột trái–phải, robot ở giữa */
+      /* Chữ nền lớn — giữa màn hình, phía sau embed 3D */
+      .intro-bg-title {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 3vw;
+      }
+      .intro-bg-word {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        line-height: 1;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: clamp(1.2px, 0.15vw, 2px) rgba(255, 252, 245, 0.5);
+        paint-order: stroke fill;
+        user-select: none;
+        white-space: nowrap;
+        font-size: clamp(48px, 12vw, 185px);
+        text-align: center;
+        transform: translateY(-7vh);
+        animation: bgWordFade 1.8s ease 0.35s both;
+      }
+      @keyframes bgWordFade {
+        from { opacity: 0; transform: translateY(-7vh) scale(1.03); }
+        to   { opacity: 1; transform: translateY(-7vh) scale(1); }
+      }
+
+      /* 4 góc — editorial rail (số lớn + typographic, không hộp) */
       .intro-hero {
         position: absolute;
         inset: 0;
         z-index: 5;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(26%, 38vw) minmax(0, 1fr);
-        align-items: center;
-        padding: 5vh 0 14vh;
         pointer-events: none;
       }
-      .intro-col {
+
+      /* Thanh dọc hai cạnh */
+      .intro-rail {
+        position: absolute;
+        top: 12%;
+        bottom: 12%;
+        width: 1px;
+        background: linear-gradient(to bottom,
+          transparent 0%,
+          rgba(255, 122, 26, 0.22) 18%,
+          rgba(255, 122, 26, 0.22) 82%,
+          transparent 100%);
+        opacity: 0;
+        transition: opacity 1s ease 0.15s;
+      }
+      .intro-rail-left  { left: clamp(22px, 3.2vw, 44px); }
+      .intro-rail-right { right: clamp(22px, 3.2vw, 44px); }
+      .intro-rail::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--neon-orange);
+        box-shadow: 0 0 10px rgba(255, 122, 26, 0.6);
+      }
+      .intro-rail-left::after  { top: 18%; }
+      .intro-rail-right::after { bottom: 18%; }
+      .intro-hero.show .intro-rail { opacity: 1; }
+
+      .intro-corner {
+        position: absolute;
+        width: min(260px, 20vw);
+        opacity: 0;
+        transition: opacity 0.85s ease, transform 0.85s ease;
+      }
+      .intro-corner-tl {
+        top: clamp(32px, 5vh, 52px);
+        left: clamp(40px, 5.5vw, 72px);
+        transform: translateY(-14px);
+      }
+      .intro-corner-tr {
+        top: clamp(32px, 5vh, 52px);
+        right: clamp(40px, 5.5vw, 72px);
+        text-align: right;
+        transform: translateY(-14px);
+      }
+      .intro-corner-bl {
+        bottom: clamp(64px, 11vh, 108px);
+        left: clamp(40px, 5.5vw, 72px);
+        transform: translateY(14px);
+      }
+      .intro-corner-br {
+        bottom: clamp(64px, 11vh, 108px);
+        right: clamp(40px, 5.5vw, 72px);
+        text-align: right;
+        transform: translateY(14px);
+      }
+
+      /* Số lớn outline — góc TL & BR */
+      .intro-stat-num {
+        display: block;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 900;
+        font-size: clamp(52px, 6.5vw, 96px);
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: clamp(1px, 0.12vw, 1.5px) rgba(255, 122, 26, 0.55);
+      }
+      .intro-stat-unit {
+        display: block;
+        font-family: "Space Mono", monospace;
+        font-size: clamp(8px, 0.65vw, 10px);
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 4px;
+      }
+      .intro-rule {
+        width: clamp(32px, 3.5vw, 48px);
+        height: 1px;
+        background: linear-gradient(90deg, var(--neon-orange), transparent);
+        margin: clamp(10px, 1.2vh, 14px) 0;
+      }
+      .intro-rule-right {
+        margin-left: auto;
+        background: linear-gradient(270deg, var(--neon-orange), transparent);
+      }
+      .intro-corner p {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(11px, 0.85vw, 13px);
+        font-weight: 500;
+        line-height: 1.65;
+        color: rgba(255, 255, 255, 0.68);
+        max-width: 22ch;
+      }
+      .intro-corner-tr p { margin-left: auto; }
+
+      /* Meta list — góc TR */
+      .intro-meta-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(10px, 1.2vh, 14px);
+      }
+      .intro-meta-list li {
+        font-family: "Montserrat", sans-serif;
+        font-size: clamp(11px, 0.85vw, 13px);
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.78);
         display: flex;
         align-items: center;
-        min-height: 0;
-        opacity: 0;
-        transition: opacity 0.75s ease, transform 0.75s ease;
-      }
-      .intro-col-left {
-        grid-column: 1;
         justify-content: flex-end;
-        padding-left: clamp(20px, 3.5vw, 56px);
-        padding-right: clamp(12px, 1.5vw, 24px);
-        transform: translateX(-28px);
+        gap: 10px;
       }
-      .intro-col-right {
-        grid-column: 3;
-        justify-content: flex-start;
-        padding-right: clamp(20px, 3.5vw, 56px);
-        padding-left: clamp(12px, 1.5vw, 24px);
-        transform: translateX(28px);
-      }
-      .intro-hero.show .intro-col-left,
-      .intro-hero.show .intro-col-right {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      .intro-hero.show .intro-col-right { transition-delay: 0.12s; }
-      .intro-panel {
-        width: 100%;
-        max-width: min(38vw, 520px);
-        padding: clamp(10px, 1.5vw, 24px) 0; /* Giảm padding để chữ tự nhiên hơn */
-        background: transparent; /* Loại bỏ hoàn toàn nền */
-        backdrop-filter: none;
-        border-radius: 0;
-        box-shadow: none;
-      }
-      .intro-panel-left {
-        text-align: right;
-        border: none;
-        background: transparent;
-      }
-      .intro-panel-right {
-        text-align: left;
-        border: none;
-        background: transparent;
-      }
-      .intro-eyebrow {
+      .intro-meta-list li span {
         font-family: "Space Mono", monospace;
-        font-size: clamp(13px, 1.1vw, 18px);
-        color: var(--neon-orange);
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        margin-bottom: clamp(14px, 1.5vh, 22px);
-        text-shadow: 0 0 12px rgba(255, 122, 26, 0.5), 0 2px 8px rgba(0, 0, 0, 0.9);
-      }
-      .intro-title {
-        font-family: "Montserrat", sans-serif;
-        font-size: clamp(34px, 3.6vw, 68px);
-        font-weight: 800;
-        letter-spacing: -0.015em;
-        line-height: 1.14;
-        margin-bottom: 0;
-        background: linear-gradient(to bottom, #ffffff 40%, #e2eaf8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.98)); /* Giúp text gradient nổi bần bật trên nền 3D */
-      }
-      .intro-tags-label {
-        font-family: "Montserrat", sans-serif;
-        font-size: clamp(12px, 1vw, 15px);
+        font-size: clamp(8px, 0.65vw, 9.5px);
         font-weight: 700;
         color: var(--neon-orange);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        margin-bottom: clamp(14px, 1.5vh, 20px);
-        display: block;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        letter-spacing: 0.1em;
+        opacity: 0.85;
       }
-      .intro-desc {
+
+      /* Pull-quote — góc BL */
+      .intro-quote {
         font-family: "Montserrat", sans-serif;
-        font-size: clamp(16.5px, 1.6vw, 24px);
-        line-height: 1.65;
+        font-size: clamp(12px, 0.95vw, 14.5px) !important;
         font-weight: 500;
-        color: #ffffff; /* Sáng trắng hoàn toàn tăng độ tương phản */
-        margin-bottom: clamp(20px, 2.5vh, 28px);
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98), 0 0 15px rgba(3, 4, 10, 0.95); /* Bóng đổ dày để chữ cực kỳ dễ đọc */
+        font-style: italic;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.75) !important;
+        max-width: 26ch !important;
+        padding-left: clamp(12px, 1.2vw, 16px);
+        border-left: 2px solid rgba(255, 122, 26, 0.5);
+        margin-bottom: clamp(10px, 1.2vh, 14px);
       }
-      .intro-tags {
+      .intro-meta {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(8px, 0.65vw, 9.5px);
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 122, 26, 0.7);
+      }
+
+      /* Tag inline — góc BR */
+      .intro-inline-tags {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: clamp(8px, 0.8vw, 12px);
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .intro-tags li {
-        font-family: "Montserrat", sans-serif; /* Montserrat cao cấp sạch lỗi dấu */
-        font-weight: 600;
-        font-size: clamp(11px, 0.9vw, 14px);
-        letter-spacing: 0.03em;
+        justify-content: flex-end;
+        gap: 0;
+        margin-top: clamp(10px, 1.2vh, 14px);
+        font-family: "Space Mono", monospace;
+        font-size: clamp(8px, 0.65vw, 9.5px);
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        padding: clamp(6px, 0.6vw, 10px) clamp(10px, 1vw, 16px);
-        border: 1px solid rgba(255, 122, 26, 0.28);
-        border-radius: 6px;
-        color: rgba(255, 255, 255, 0.88);
-        background: rgba(3, 4, 10, 0.7);
-        transition: all 0.3s ease;
+        color: rgba(255, 255, 255, 0.45);
       }
-      .intro-tags li.tag-soon {
-        border-color: rgba(255, 255, 255, 0.14);
-        color: var(--text-dim);
+      .intro-inline-tags span:not(:last-child)::after {
+        content: " · ";
+        color: rgba(255, 122, 26, 0.45);
+        padding: 0 4px;
       }
 
-      @media (min-width: 1600px) {
-        .intro-title { font-size: 76px; }
-        .intro-desc { font-size: 30px; }
-        .intro-panel { max-width: 560px; }
+      .intro-hero.show .intro-corner {
+        opacity: 1;
+        transform: translateY(0);
       }
+      .intro-hero.show .intro-corner-tr { transition-delay: 0.1s; }
+      .intro-hero.show .intro-corner-bl { transition-delay: 0.18s; }
+      .intro-hero.show .intro-corner-br { transition-delay: 0.26s; }
 
       @media (max-width: 900px) {
-        .intro-hero {
-          grid-template-columns: 1fr;
-          grid-template-rows: auto auto;
-          align-content: start;
-          gap: 20px;
-          padding: 10vh 5vw 42vh;
+        .intro-bg-word {
+          font-size: clamp(28px, 8.5vw, 52px);
+          letter-spacing: 0.02em;
+          -webkit-text-stroke: 1.2px rgba(255, 252, 245, 0.45);
+          transform: translateY(-6vh);
         }
-        .intro-col-left,
-        .intro-col-right {
-          grid-column: 1;
-          justify-content: stretch;
-          padding: 0;
-          transform: translateY(16px);
+        @keyframes bgWordFade {
+          from { opacity: 0; transform: translateY(-6vh) scale(1.03); }
+          to   { opacity: 1; transform: translateY(-6vh) scale(1); }
         }
-        .intro-hero.show .intro-col-left,
-        .intro-hero.show .intro-col-right {
-          transform: translateY(0);
+        .intro-rail { display: none; }
+        .intro-corner {
+          width: min(220px, 62vw);
         }
-        .intro-panel {
-          max-width: 100%;
-          text-align: left;
+        .intro-corner-tl {
+          top: 24px;
+          left: 18px;
         }
-        .intro-panel-left {
-          border: none;
-          background: transparent;
+        .intro-corner-tr {
+          top: auto;
+          bottom: clamp(118px, 23vh, 150px);
+          right: 18px;
+        }
+        .intro-corner-bl {
+          bottom: 64px;
+          left: 18px;
+        }
+        .intro-corner-br { display: none; }
+        .intro-stat-num {
+          font-size: clamp(40px, 11vw, 64px);
+        }
+        .intro-corner p,
+        .intro-quote {
+          font-size: clamp(10.5px, 2.9vw, 12px) !important;
         }
         .intro-vignette {
           background:
@@ -1014,34 +1111,45 @@
         <div class="spinner"></div>
         <span>ĐANG TẢI KHÔNG GIAN 3D...</span>
       </div>
+      <div class="intro-bg-title" aria-hidden="true">
+        <span class="intro-bg-word">FPT University</span>
+      </div>
+      <div class="intro-vignette" aria-hidden="true"></div>
       <spline-viewer
         id="intro-viewer"
         loading="eager"
         url="https://prod.spline.design/ewC1T9Lh0ZWOsRqo/scene.splinecode"
       ></spline-viewer>
-      <div class="intro-vignette" aria-hidden="true"></div>
       <div class="intro-hero" id="intro-hero">
-        <div class="intro-col intro-col-left">
-          <div class="intro-panel intro-panel-left">
-            <span class="intro-eyebrow">FPT University · Cổng chuyên ngành CNTT</span>
-            <h1 class="intro-title">Khám phá tương lai công nghệ qua từng chuyên ngành</h1>
-          </div>
+        <div class="intro-rail intro-rail-left" aria-hidden="true"></div>
+        <div class="intro-rail intro-rail-right" aria-hidden="true"></div>
+
+        <div class="intro-corner intro-corner-tl">
+          <span class="intro-stat-num">10</span>
+          <span class="intro-stat-unit">Chuyên ngành</span>
+          <div class="intro-rule"></div>
+          <p>Cổng kết nối chuyên ngành CNTT tương tác.</p>
         </div>
-        <div class="intro-col intro-col-right">
-          <div class="intro-panel intro-panel-right">
-            <span class="intro-tags-label">10 chuyên ngành CNTT</span>
-            <ul class="intro-tags" aria-label="Các chuyên ngành">
-              <li>Công nghệ thông tin</li>
-              <li>Robot &amp; AI</li>
-              <li>Kỹ thuật phần mềm</li>
-              <li>Trí tuệ nhân tạo</li>
-              <li>An toàn thông tin</li>
-              <li>Vi mạch bán dẫn</li>
-              <li>Ô tô số</li>
-              <li>Hệ thống thông tin</li>
-              <li class="tag-soon">Khoa học dữ liệu</li>
-              <li class="tag-soon">Đồ họa số</li>
-            </ul>
+
+        <div class="intro-corner intro-corner-tr">
+          <ul class="intro-meta-list">
+            <li><span>01</span> Interactive Portal</li>
+            <li><span>02</span> Không gian 3D</li>
+            <li><span>03</span> ACM · ISO</li>
+          </ul>
+        </div>
+
+        <div class="intro-corner intro-corner-bl">
+          <p class="intro-quote">Khám phá mỗi lộ trình trong không gian 3D riêng biệt.</p>
+          <span class="intro-meta">FPT University · CNTT · 2026</span>
+        </div>
+
+        <div class="intro-corner intro-corner-br">
+          <span class="intro-stat-num">8</span>
+          <span class="intro-stat-unit">Không gian 3D</span>
+          <div class="intro-rule intro-rule-right"></div>
+          <div class="intro-inline-tags">
+            <span>AI</span><span>Robot</span><span>Security</span><span>Chip</span>
           </div>
         </div>
       </div>
@@ -1526,39 +1634,6 @@
         }
       })();
 
-      // Tối ưu hóa nạp ngầm (Idle Preload) cho tất cả các mô hình 3D (.splinecode) của các chuyên ngành
-      window.addEventListener('load', () => {
-        const preloadSubPages3D = () => {
-          const splineUrls = [
-            "https://prod.spline.design/l-z4rkSuwU9lDO-9/scene.splinecode", // IT
-            "https://prod.spline.design/e4D1T6fh6czHZWtu/scene.splinecode", // Robot & AI
-            "https://prod.spline.design/eubA1DkR-mlMa4SF/scene.splinecode", // Automotive
-            "https://prod.spline.design/5LNQT-8gecn6Kupz/scene.splinecode", // AI
-            "https://prod.spline.design/VKxTBSIgEO4zdKe8/scene.splinecode", // Security
-            "https://prod.spline.design/KvZkPS1S-uMNFh0G/scene.splinecode", // InfoSys
-            "https://prod.spline.design/6CWre6Fx6MlPcS9v/scene.splinecode", // Software
-            "https://prod.spline.design/85JDcEdRpQj-jze2/scene.splinecode", // Semiconductor
-            "https://prod.spline.design/mkBqaGCdgzYoUp5N/scene.splinecode", // DataScience
-            "https://prod.spline.design/E9mlCyJZVbRqJ7EE/scene.splinecode"  // Design
-          ];
-
-          const schedulePreload = window.requestIdleCallback || ((cb) => setTimeout(cb, 1000));
-          
-          schedulePreload(() => {
-            splineUrls.forEach(url => {
-              const link = document.createElement('link');
-              link.rel = 'preload';
-              link.as = 'fetch';
-              link.href = url;
-              link.crossOrigin = 'anonymous';
-              document.head.appendChild(link);
-            });
-          });
-        };
-
-        // Kích hoạt nạp ngầm sau 2.5 giây khi các chuyển động intro mượt mà đã hoàn tất
-        setTimeout(preloadSubPages3D, 2500);
-      });
     </script>
   </body>
 </html>
