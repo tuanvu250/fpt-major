@@ -840,6 +840,170 @@
           left: 10px;
         }
       }
+
+      @media (max-width: 1100px) {
+        .intro {
+          min-height: 100svh;
+        }
+        .intro-hero {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto;
+          align-content: start;
+          gap: 20px;
+          padding: 9vh 5vw 34vh;
+        }
+        .intro-col-left,
+        .intro-col-right {
+          grid-column: 1;
+          justify-content: stretch;
+          padding: 0;
+          transform: translateY(16px);
+        }
+        .intro-hero.show .intro-col-left,
+        .intro-hero.show .intro-col-right {
+          transform: translateY(0);
+        }
+        .intro-panel {
+          max-width: min(100%, 720px);
+          text-align: left;
+        }
+        .intro-panel-left,
+        .intro-panel-right {
+          border: none;
+          background: transparent;
+        }
+        .intro-title {
+          font-size: clamp(30px, 6vw, 48px);
+        }
+        .intro-desc {
+          font-size: clamp(16px, 2.4vw, 20px);
+        }
+        .intro-tags {
+          gap: 8px;
+        }
+        .intro-tags li {
+          padding: 8px 12px;
+        }
+        .intro-vignette {
+          background:
+            linear-gradient(to bottom, rgba(3,4,10,0.92) 0%, rgba(3,4,10,0.48) 40%, transparent 58%),
+            linear-gradient(to bottom, transparent 52%, rgba(3,4,10,0.82) 100%);
+        }
+        .portal-section {
+          padding: 84px 16px 112px;
+        }
+        .portal-header {
+          margin-bottom: 72px;
+        }
+        .portal-header p {
+          font-size: 14px;
+        }
+        .portal-stats {
+          gap: 18px;
+        }
+        .portal-line {
+          left: 20px;
+          transform: none;
+        }
+        .portal-line-pulse {
+          animation-duration: 3s;
+        }
+        .portal-node {
+          left: 20px;
+          top: 36px;
+          transform: translate(-50%, -50%);
+        }
+        .portal-row {
+          grid-template-columns: 1fr;
+          gap: 24px;
+          padding-left: 52px;
+        }
+        .portal-row.left-align .card-wrapper,
+        .portal-row.right-align .card-wrapper {
+          grid-column: 1;
+        }
+        .portal-card {
+          padding: 20px 22px;
+        }
+        .portal-row:hover .portal-node {
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+      }
+
+      @media (max-width: 680px) {
+        .intro-hero {
+          gap: 16px;
+          padding: 8vh 4vw 28vh;
+        }
+        .intro-title {
+          font-size: clamp(26px, 8vw, 38px);
+          line-height: 1.12;
+        }
+        .intro-tags-label,
+        .intro-eyebrow {
+          letter-spacing: 0.12em;
+        }
+        .intro-tags li {
+          font-size: 11px;
+          width: calc(50% - 4px);
+          justify-content: center;
+          text-align: center;
+        }
+        .scroll-cue {
+          bottom: 20px;
+        }
+        .portal-section {
+          padding: 64px 12px 84px;
+        }
+        .portal-header {
+          margin-bottom: 56px;
+        }
+        .portal-header h1 {
+          font-size: clamp(24px, 8vw, 34px);
+        }
+        .portal-lead {
+          font-size: 12px;
+        }
+        .portal-stats {
+          gap: 14px;
+          padding-top: 22px;
+        }
+        .portal-stat {
+          min-width: calc(50% - 7px);
+        }
+        .portal-row {
+          gap: 18px;
+          padding-left: 40px;
+        }
+        .portal-line {
+          left: 12px;
+        }
+        .portal-node {
+          left: 12px;
+          top: 30px;
+        }
+        .portal-card {
+          padding: 18px 16px;
+          clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+        }
+        .card-header-area,
+        .card-cta-line {
+          gap: 10px;
+        }
+        .card-header-area {
+          align-items: flex-start;
+        }
+        .card-title-box h3 {
+          font-size: 17px;
+        }
+        .portal-card p {
+          font-size: 13px;
+        }
+        .card-cta-line {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
     </style>
   </head>
   <body>

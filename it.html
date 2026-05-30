@@ -443,6 +443,7 @@
         .tr-it .p-tag-it,.br-it .p-tag-it { justify-content:flex-start; flex-direction:row; }
         .svg-arrows-it,.grid-it,.scroll-hint-it,.vignette-it { display:none; }
       }
+      /* responsive-override-test */
       @media (prefers-reduced-motion: reduce) {
         .panel-it { opacity:1!important; transform:none!important; }
         .p-tag-it::before { animation:none; opacity:1; }
@@ -618,6 +619,178 @@
       @keyframes blink-log-line {
         0% { opacity: 0; transform: translateY(3px); }
         100% { opacity: 1; transform: translateY(0); }
+      }
+      /* responsive overrides */
+      @media (max-width: 1100px) {
+        nav[class^="nav-"] {
+          height: auto;
+          min-height: 56px;
+          padding: 12px 16px;
+          gap: 8px 14px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+        [class^="nav-brand-"], [class*=" nav-brand-"] {
+          font-size: 15px;
+          line-height: 1.35;
+        }
+        [class^="nav-tag-"], [class*=" nav-tag-"] {
+          font-size: 11px;
+          letter-spacing: 0.1em;
+        }
+        section[class^="experience-"] {
+          padding: 72px 16px 0;
+        }
+        [class^="sticky-stage-"], [class*=" sticky-stage-"] {
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          overflow: visible;
+        }
+        spline-viewer[id$="-viewer"] {
+          inset: auto;
+          height: clamp(300px, 52vh, 520px);
+          min-height: 300px;
+          border-radius: 14px;
+          overflow: hidden;
+        }
+        [class^="spline-cover-"], [class*=" spline-cover-"] {
+          width: 140px;
+          height: 44px;
+        }
+        [class^="panel-"], [class*=" panel-"] {
+          width: min(100%, 760px);
+          margin: 0 auto 16px;
+          padding: 18px 18px 20px;
+          border-radius: 10px;
+          background: rgba(5, 7, 18, 0.92);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+        }
+        [class^="panel-"] h2, [class*=" panel-"] h2 {
+          font-size: clamp(22px, 4vw, 30px);
+          margin-bottom: 10px;
+        }
+        [class^="panel-"] p,
+        [class*=" panel-"] p,
+        [class^="salary-"],
+        [class*=" salary-"] {
+          font-size: 16px;
+          line-height: 1.65;
+        }
+        [class^="panel-"] ul, [class*=" panel-"] ul {
+          gap: 8px;
+        }
+        [class^="panel-"] li, [class*=" panel-"] li {
+          font-size: 15px;
+          line-height: 1.55;
+        }
+        [class^="stats-"], [class*=" stats-"] {
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        [class^="stat-"], [class*=" stat-"] {
+          min-width: calc(50% - 6px);
+        }
+        [class^="tr-"], [class*=" tr-"],
+        [class^="br-"], [class*=" br-"] {
+          text-align: left;
+        }
+        [class^="tr-"] [class^="p-tag-"],
+        [class*=" tr-"] [class^="p-tag-"],
+        [class^="br-"] [class^="p-tag-"],
+        [class*=" br-"] [class^="p-tag-"] {
+          justify-content: flex-start;
+          flex-direction: row;
+        }
+        [class^="tr-"] [class^="panel-"] li,
+        [class*=" tr-"] [class^="panel-"] li,
+        [class^="br-"] [class^="panel-"] li,
+        [class*=" br-"] [class^="panel-"] li {
+          padding-left: 16px;
+          padding-right: 0;
+        }
+        [class^="tr-"] [class^="panel-"] li::before,
+        [class*=" tr-"] [class^="panel-"] li::before,
+        [class^="br-"] [class^="panel-"] li::before,
+        [class*=" br-"] [class^="panel-"] li::before {
+          left: 0;
+          right: auto;
+        }
+        [class^="tr-"] [class^="stat-"],
+        [class*=" tr-"] [class^="stat-"],
+        [class^="br-"] [class^="stat-"],
+        [class*=" br-"] [class^="stat-"],
+        [class^="tr-"] .tech-stack-container,
+        [class*=" tr-"] .tech-stack-container,
+        [class^="br-"] .tech-stack-container,
+        [class*=" br-"] .tech-stack-container {
+          text-align: left;
+        }
+        [class^="tr-"] .tech-badges,
+        [class*=" tr-"] .tech-badges,
+        [class^="br-"] .tech-badges,
+        [class*=" br-"] .tech-badges {
+          justify-content: flex-start;
+        }
+        [class^="svg-arrows-"], [class*=" svg-arrows-"],
+        [class^="grid-"], [class*=" grid-"],
+        [class^="scroll-hint-"], [class*=" scroll-hint-"] {
+          display: none;
+        }
+        footer[class^="footer-"] {
+          padding: 28px 16px 40px;
+        }
+      }
+      @media (max-width: 680px) {
+        nav[class^="nav-"] {
+          padding: 10px 14px;
+        }
+        [class^="nav-brand-"], [class*=" nav-brand-"] {
+          font-size: 14px;
+        }
+        [class^="nav-tag-"], [class*=" nav-tag-"] {
+          font-size: 10px;
+        }
+        section[class^="experience-"] {
+          padding: 68px 12px 0;
+        }
+        spline-viewer[id$="-viewer"] {
+          height: clamp(220px, 44vh, 320px);
+          min-height: 220px;
+          border-radius: 12px;
+        }
+        [class^="panel-"], [class*=" panel-"] {
+          width: 100%;
+          padding: 16px 14px 18px;
+          margin-bottom: 12px;
+        }
+        [class^="hud-sys-status-"], [class*=" hud-sys-status-"] {
+          display: none;
+        }
+        [class^="stats-"], [class*=" stats-"] {
+          flex-direction: column;
+        }
+        [class^="stat-"], [class*=" stat-"] {
+          min-width: 100%;
+        }
+        [class^="stage-list-"], [class*=" stage-list-"] {
+          padding-left: 20px;
+        }
+        [class^="stage-list-"]::before, [class*=" stage-list-"]::before {
+          left: 4px;
+        }
+        [class^="stage-item-"], [class*=" stage-item-"] {
+          grid-template-columns: 1fr;
+          gap: 4px;
+          padding: 8px 0 8px 4px;
+        }
+        [class^="stage-item-"]::before, [class*=" stage-item-"]::before {
+          left: -20px;
+        }
+        [class^="si-time-"], [class*=" si-time-"] {
+          white-space: normal;
+        }
       }
     </style>
   </head>
